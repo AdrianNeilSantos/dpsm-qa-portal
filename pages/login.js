@@ -19,8 +19,9 @@ function Login() {
   <div>
   <Head>
     <title>DPSM-QA-PORTAL</title>
-    <link rel="stylesheet" href= "/style.css" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"></link>
+    <link rel="stylesheet" href= "/authentication.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"/>
+    <link rel="stylesheet" href= "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
  </Head>
  
  <div className = "row">
@@ -88,7 +89,7 @@ function Login() {
                 <Field type="password" placeholder="Password" id="password" name="password" />
                 <br /> <br />
                 <div className="forget-pass">
-                  <a href="#">Forgot Password</a>
+                <Link href = "/forgot-password"><a href = "#">Forgot Password?</a></Link>
                 </div>
                 <br />
                 <button className="test" type="submit" disabled={isSubmitting}>Login</button>

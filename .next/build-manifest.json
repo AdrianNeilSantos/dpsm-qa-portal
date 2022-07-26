@@ -24,10 +24,15 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/faculty": [
+    "/admin": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/faculty.js"
+      "static/chunks/pages/admin.js"
+    ],
+    "/forgot-password": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/forgot-password.js"
     ],
     "/login": [
       "static/chunks/webpack.js",

@@ -1,0 +1,162 @@
+/* Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+/* ROOT VARIABLES */
+#panel1{
+    background-image: url('upm.jpg');
+    background-size: cover; 
+}
+
+a:link {
+    color: black;
+    background-color: transparent;
+    text-decoration: underline;
+}
+
+:root{
+    --color-primary: #7380ec;
+    --color-danger: #ff7782;
+    --color-success: #41f1b6;
+    --color-warning: #ffbb55;
+    --color-white: #fff;
+    --color-info-dark: #7d8da1;
+    --color-info-light: #dce1eb;
+    --color-dark: #363949;
+    --color-light: rgba(132,139,200,0.18);
+    --color-primary-variant: #111e88;
+    --color-dark-variant: #677483;
+    --color-background: #f6f6f9;
+
+
+    --card-border-radius: 2rem;
+    --border-radius-1: 0.4rem;
+    --border-radius-2: 0.8rem;
+    --border-radius-3: 1.2rem;
+
+    --card-padding: 1.8rem;
+    --padding-1: 1.2rem;
+
+    --box-shadow: 0 2rem 3 rem var(--color-light);
+}
+
+*{
+    margin: 0;
+    outline: 0;
+    appearance: none;
+    border: 0;
+    text-decoration: none;
+    list-style: none;
+}
+
+html{
+    font-size: 14px;
+}   
+
+body{
+    font-family: 'Roboto', sans-serif;
+    overflow: hidden;
+}
+
+img{
+    display: block;
+    width: 100%;
+}
+
+.profile-photo{
+    width: 2.8rem;
+    height: 2.8rem;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.text-muted{
+    color: var(--color-info-dark);
+}
+
+
+form{
+    /*border: 3px solid #f1f1f1;*/
+}
+
+input[type=email], input[type=password] {
+     width: 60%;
+     padding: 12px 20px;
+     margin: 8px 0;
+     display: inline-block;
+     border: 1px solid #000000;
+     border-radius: 20px;
+    }
+
+button {
+    padding: 14px 20px;
+    cursor: pointer;
+    width: 60%;
+}
+
+button:hover {
+    opacity: 0.8;
+}
+
+.cancelbtn {
+    width: auto;
+    padding: 10px 18px;
+    background-color: #800020;
+}
+
+.container {
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+    padding: 15%;
+    margin: auto;
+}
+
+span.psw {
+    float: right;
+    padding-top: 16px;
+}
+
+.login{
+    padding-top: 20px;
+}
+
+.test{
+    border-radius: 20px;
+    color: #ffffff;
+    background-color: #800020;
+}
+
+.return{
+    text-decoration: none; 
+    padding-left: 25px; 
+    color: #800020
+}
+
+.img-lock{
+    margin: auto; 
+    width: 75px; 
+    height: 75px;
+}
+
+#alert {
+ 	visibility: hidden;
+}
+
+
+/* Change styles for span and cancel button on extra small screens */
+@media screen and (max-width: 400px) {
+  span.psw {
+         display: block;
+        float: none;
+  }
+  .cancelbtn {
+         width: 100%;
+  }
+  
+  #panel1{
+        display: none;
+  }
+
+  /*#user{
+        display: none;
+  }*/
+}
