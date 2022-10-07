@@ -31,29 +31,29 @@ function LicensureExam(props) {
                 return (
                     <tr key = {props.children[key].licenseId}>
                         <td>{props.children[key].examName}</td>
-                        <td>{props.children[key].rank == 0 || props.children[key].rank == null ? 'N/A' : props.children[key].rank}</td>
-                        <td>{props.children[key].examDate}</td>
-                        <td>{props.children[key].licenseNumber}</td>
-                        <td>
+                        <td className="less-important-mobile">{props.children[key].rank == 0 || props.children[key].rank == null ? 'N/A' : props.children[key].rank}</td>
+                        <td className="less-important-pc">{props.children[key].examDate}</td>
+                        <td className="less-important-mobile">{props.children[key].licenseNumber}</td>
+                        <td className="less-important-tablet">
                         {
                             props.children[key].proof &&
                             <div className = "btn-grp">
                                 <button
                                     type="button"
-                                    className="btn btn-primary"
+                                    className="btn customButton-icon-only blue"
                                     onClick = {() => {
                                         let file = props.children[key].proof
                                         downloadProof(file, props.token)
                                     }}
                                 >
-                                    Download
+                                    <span className="material-icons-sharp">file_download</span>
                                 </button>
                                 <a
-                                    className ="btn btn-info"
+                                    className ="btn customButton-icon-only blue"
                                     href={process.env.UPLOADS_URL + props.children[key].proof}
                                     style = {{ color: 'white' }}
                                     target="_blank">
-                                    Preview
+                                    <span className="material-icons-sharp">visibility</span>
                                 </a>
                             </div>
                         }
@@ -62,28 +62,42 @@ function LicensureExam(props) {
                             <div>None</div>
                         }
                         </td>
-                        <td>{props.children[key].status}</td>
-                        <td>{props.children[key].approverRemarks || 'None'}</td>
+                        <td className="less-important-mobile">{props.children[key].status}</td>
+                        <td className="less-important-pc">{props.children[key].approverRemarks || 'None'}</td>
                         <td>
                         { props.editable &&
-                            <div className = "btn-group">
-                                <a className="btn btn-info" data-toggle="modal" data-target="#editLicensureExam" onClick={() => {
+                            <div>
+                                <button type="submit" className="btn customButton-icon-only blue" data-bs-toggle="modal" data-bs-target="#seeDetailsLicensureExam" onClick={() => {
+                                        setEdit(props.children[key].licenseId)
+                                        setKey(editLic)
+                                    }}>
+                                        <span className="material-icons-sharp">visibility</span>
+                                </button>
+                                <button className="btn customButton-icon-only yellow" data-bs-toggle="modal" data-bs-target="#editLicensureExam" onClick={() => {
                                     setEdit(props.children[key].licenseId)
                                     setKey(editLic)
-                                }}>Edit</a>
-                                <a className="btn btn-danger" data-toggle="modal" data-target="#deleteLicensureExam" onClick={() => {
+                                }}>
+                                    <span className="material-icons-sharp">edit</span>
+                                </button>
+                                <button className="btn customButton-icon-only delete" data-bs-toggle="modal" data-bs-target="#deleteLicensureExam" onClick={() => {
                                     setDelete(props.children[key].licenseId)
-                                }}>Delete</a>
+                                }}>
+                                    <span className="material-icons-sharp">delete</span>
+                                </button>
                             </div>
                         }
                         { props.approver &&
-                            <div className = "btn-grp">
-                                <a className="btn btn-info" data-toggle="modal" data-target="#approveLicense" onClick={() => {
+                            <div className = "center">
+                                <button className="btn customButton-icon-only green" data-bs-toggle="modal" data-bs-target="#approveLicense" onClick={() => {
                                     setApprove(props.children[key].licenseId)
-                                }}>Approve</a>
-                                <a className="btn btn-danger" data-toggle="modal" data-target="#rejectLicense" onClick={() => {
+                                }}>
+                                    <span className="material-icons-sharp">check</span>
+                                </button>
+                                <button className="btn customButton-icon-only maroon" data-bs-toggle="modal" data-bs-target="#rejectLicense" onClick={() => {
                                     setApprove(props.children[key].licenseId)
-                                }}>Reject</a>
+                                }}>
+                                    <span className="material-icons-sharp">close</span>
+                                </button>
                             </div>
                         }
                         </td>
@@ -93,7 +107,7 @@ function LicensureExam(props) {
         })
     }
     else{
-        content = <td colSpan = "7"><p align = "center">No data available!</p></td>
+        content = <td colSpan = "8"><br/><p align = "center">No data available.</p></td>
     }
 
     function setEdit(id) {
@@ -126,39 +140,57 @@ function LicensureExam(props) {
 
     return (
         <div>
-            <h2 align = "center"> Licensure Exams </h2>
+            <div className="center">
+                <h2 align = "center" style={{display: "inline-block", verticalAlign: "bottom"}}> Licensure Exams </h2>
+                {/* Add Button Trigger */}
+                { props.editable &&
+                <button type="button" className="btn customButton-icon-only maroon" data-bs-toggle="collapse" data-bs-target="#addLicense" aria-expanded="false" aria-controls="addLicense" style={{left: "1rem", position: "relative"}}>
+                    <span className="material-icons-sharp">add</span>
+                </button>
+                }
+            </div>
+
+            
+            
+            <br/>
             <NameDisplay unit = {props.unit} position={props.position}>{props.name}</NameDisplay>
             <div role="alert" id="licensureexamalert" style={{visibility:"hidden"}}></div>
-            <div className = "table-responsive">
-                <table className = "table table-striped table-sm">
-                    <tbody>
+            
+            <br/>
+            { props.editable && 
+                <div className="card collapse" id="addLicense">
+                    <LicensureExamForm token = { props.token } />
+                </div>   
+            }
+
+            <div className = "table-container">
+                <table className="table table-hover">
+                    <thead>
                         <tr>
                             <th>Exam Name</th>
-                            <th>Rank</th>
-                            <th>Date</th>
-                            <th>License Number</th>
-                            <th>Proof</th>
-                            <th>Status</th>
-                            <th>Approver Remarks</th>
+                            <th className="less-important-mobile">Rank</th>
+                            <th className="less-important-pc">Date</th>
+                            <th className="less-important-mobile">License Number</th>
+                            <th className="less-important-tablet">Proof</th>
+                            <th className="less-important-mobile">Status</th>
+                            <th className="less-important-pc">Approver Remarks</th>
                             { (props.editable || props.approver) && <th>Action</th>}
                         </tr>
+                    </thead>
+                    <tbody>
                         {content}
                     </tbody>
                 </table>
             </div>
+            <br/><br/>
 
-            { props.editable && 
-                <div>
-                    <LicensureExamForm token = { props.token } />
-                </div>   
-            }
 	
             <div className="modal fade" id="editLicensureExam" tabIndex="-1" role="dialog" aria-labelledby="editLicensureExamLabel" aria-hidden="true">
                 <div className="modal-dialog" role="document">
                     <div className="modal-content">
                     <div className="modal-header">
                         <h5 className="modal-title" id="editLicensureExamLabel">Update Licensure Exam Information</h5>
-                        <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" className="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
@@ -192,32 +224,31 @@ function LicensureExam(props) {
                     {({ values, errors, touched, isSubmitting }) => (
                         <Form id = "editLicForm">
                             <div className="modal-body">
-                                <hr />
-                                <div className = "form-row">
+                                <div className = "row pb-3">
                                     <div className = "form-group">
                                         <label htmlFor = "LicensureExamUpdate"> Licensure Exam </label>
                                         <Field className = "form-control" type = "text" name = "examName" id = "examName" placeholder = "Input licensure exam" />
                                     </div>
                                 </div>
-                                <div className = "form-row">
+                                <div className = "row pb-3">
                                     <div className = "form-group">
                                         <label htmlFor = "LicensureExamDateUpdate"> Date </label>
                                         <Field type = "date" className = "form-control" name = "examDate" id = "examDate" />
                                     </div>
                                 </div>
-                                <div className = "form-row">
+                                <div className = "row pb-3">
                                     <div className = "form-group">
                                         <label htmlFor = "LicensureExamRankUpdate"> Rank </label>
                                         <Field className = "form-control" type = "text" name = "rank" id = "rank" placeholder = "Input rank" />
                                     </div>
                                 </div>
-                                <div className = "form-row">
+                                <div className = "row pb-3">
                                     <div className = "form-group">
                                         <label htmlFor = "LicenseNumeberUpdate"> License Number </label>
                                         <Field className = "form-control" type = "text" name = "licenseNumber" id = "licenseNumber" placeholder = "Input licensure number" />
                                     </div>
                                 </div>
-                                <div className = "form-row">
+                                <div className = "row pb-3">
                                     <div className = "form-group">
                                         <label htmlFor = "LicensureExamProofUpdate"> Add/Edit Proof [Uploaded: {currData.proof}] </label>
                                         <Field type = "file" className = "form-control-file" name = "proof" id = "proof" value={undefined} />
@@ -225,7 +256,7 @@ function LicensureExam(props) {
                                 </div>
                             </div>
                             <div className="modal-footer">
-                                <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                 <button type="submit" className="btn btn-primary" disabled = {isSubmitting} onClick = {() => {
                                     $('#editLicensureExam').modal('toggle');
                                 }}>Save changes</button>
@@ -242,17 +273,17 @@ function LicensureExam(props) {
                     <div className="modal-content">
                         <div className="modal-header">
                             <h5 className="modal-title" id="deleteLicensureExamLabel">Delete Licensure Exam Information</h5>
-                            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                            <button type="button" className="close" data-bs-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div className="modal-body">
-                            <hr />
                             <p> Are you sure you want to delete this licensure exam information? </p>
                         </div>
                         <div className="modal-footer">
-                        <button type="button" className="btn btn-secondary" data-dismiss="modal">No, don't delete</button>
+                        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">No, don't delete</button>
                         <button type="button" className="btn btn-danger" onClick = {async () => {
+                            $('#deleteLicensureExam').modal('toggle');
                             let alert = document.getElementById("licensureexamalert")
                             let res = await deleteLicensure(deleteLic, props.token)
                             if(res.success == true) { 
@@ -279,16 +310,15 @@ function LicensureExam(props) {
                     <div className="modal-content">
                     <div className="modal-header">
                         <h5 className="modal-title" id="approveLicenseLabel">Approve Licensure Exam Information</h5>
-                        <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" className="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div className="modal-body">
-                        <hr />
                         <p> Are you sure you want to approve this licensure exam information? </p>
                     </div>
                     <div className="modal-footer">
-                        <button type="button" className="btn btn-secondary" data-dismiss="modal">No, don't approve</button>
+                        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">No, don't approve</button>
                         <button type="button" className="btn btn-danger" onClick = {async () => {
                             let alert = document.getElementById("licensureexamalert")
                             $('#approveLicense').modal('toggle');
@@ -323,7 +353,7 @@ function LicensureExam(props) {
                 <div className="modal-content">
                 <div className="modal-header">
                     <h5 className="modal-title" id="rejectLicenseLabel">Reject Licensure Exam Information</h5>
-                    <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" className="close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -359,8 +389,7 @@ function LicensureExam(props) {
                 {({ values, errors, touched, isSubmitting }) => (
                     <Form id = "rejectLicenseForm">
                         <div className="modal-body">
-                            <hr />
-                            <div className = "form-row">
+                            <div className = "row pb-3">
                                 <div className = "form-group">
                                     <label htmlFor = "RejectionRemarks"> Reason/Remarks for Rejection </label>
                                     <Field className = "form-control" type = "text" name = "approverRemarks" placeholder = "Input remarks" required />
@@ -368,7 +397,7 @@ function LicensureExam(props) {
                             </div>
                         </div>
                         <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             <button type="submit" className="btn btn-primary" disabled = {isSubmitting} onClick = {() => {
                                 $('#rejectLicense').modal('toggle');
                             }}>Save changes</button>
@@ -379,7 +408,41 @@ function LicensureExam(props) {
                 </div>
             </div>
         </div>
-    
+
+        {/* <!-- See More Modal--> */}
+        <div className="modal fade" id="seeDetailsLicensureExam" tabIndex="-1" role="dialog" aria-hidden="true">
+            <div className="modal-dialog" role="document">
+                <div className="modal-content">
+                <div className="modal-header">
+                    <h5 className="modal-title">View Licensure Exam Information</h5>
+                    <button type="button" className="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-details">
+                        <h3>Exam Name: </h3>
+                        <h4>{currData.examName}</h4>
+                        <br></br>
+                        <h3>Exam Date: </h3>
+                        <h4>{currData.examDate}</h4>
+                        <br></br>
+                        <h3>License Number: </h3>
+                        <h4>{currData.licenseNumber}</h4>
+                        <br></br>
+                        <h3>Rank: </h3>
+                        <h4>{currData.rank}</h4>
+                        <br></br>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+                </div>
+            </div>
+        </div>
+
+        <br/><br/>
 
         </div>
 	

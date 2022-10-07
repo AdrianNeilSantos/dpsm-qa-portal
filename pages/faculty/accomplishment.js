@@ -68,24 +68,34 @@ function Accomplishments(props) {
         <Layout userId={props.data.userId} facultyId={props.data.facultyId} role={props.data.role} name={props.data.name} approvalList={props.approvalList} roleAssignmentFlag={props.roleAssignmentFlag}>
             <nav>
                 <div className="nav nav-tabs nav-fill nav-justified" id="nav-tab" role="tablist">
-                    <a className="nav-item nav-link active" id="public-service-accomplishment-tab" data-toggle="tab" href="#public-service-accomplishment" role="tab" aria-controls="public-service-accomplishment" aria-selected="true">
-                        Public Service &nbsp;
+                    <a className="nav-item nav-link active nav-top" id="public-service-accomplishment-tab" data-bs-toggle="tab" href="#public-service-accomplishment" role="tab" aria-controls="public-service-accomplishment" aria-selected="true">
+                        <span className="material-icons-sharp">groups</span>
+                        <h3>Public Service</h3>
+                        &nbsp;
                         {psaRejected && <span className="badge badge-danger">!</span>}
                     </a>
-                    <a className="nav-item nav-link" id="publication-tab" data-toggle="tab" href="#publication" role="tab" aria-controls="publication" aria-selected="false">
-                        Publications &nbsp;
+                    <a className="nav-item nav-link nav-top" id="publication-tab" data-bs-toggle="tab" href="#publication" role="tab" aria-controls="publication" aria-selected="false">
+                        <span className="material-icons-sharp">article</span>
+                        <h3>Publications</h3>
+                        &nbsp;
                         {publicationRejected && <span className="badge badge-danger">!</span>}
                     </a>
-                    <a className="nav-item nav-link" id="training-seminar-tab" data-toggle="tab" href="#training-seminar" role="tab" aria-controls="training-seminar" aria-selected="false">
-                        Training/Seminars &nbsp;
+                    <a className="nav-item nav-link nav-top" id="training-seminar-tab" data-bs-toggle="tab" href="#training-seminar" role="tab" aria-controls="training-seminar" aria-selected="false">
+                        <span className="material-icons-sharp">fitness_center</span>
+                        <h3>Trainings & Seminars</h3>
+                        &nbsp;
                         {tsRejected && <span className="badge badge-danger">!</span>}
                     </a>
-                    <a className="nav-item nav-link" id="licensure-exam-tab" data-toggle="tab" href="#licensure-exam" role="tab" aria-controls="licensure-exam" aria-selected="false">
-                        Licensure Exams &nbsp;
+                    <a className="nav-item nav-link nav-top" id="licensure-exam-tab" data-bs-toggle="tab" href="#licensure-exam" role="tab" aria-controls="licensure-exam" aria-selected="false">
+                        <span className="material-icons-sharp">contact_emergency</span>
+                        <h3>Licensure Exams</h3> 
+                        &nbsp;
                         {licensureRejected && <span className="badge badge-danger">!</span>}
                     </a>
-                    <a className="nav-item nav-link" id="research-grant-tab" data-toggle="tab" href="#research-grant" role="tab" aria-controls="research-grant" aria-selected="false">
-                        Research Grants &nbsp;
+                    <a className="nav-item nav-link nav-top" id="research-grant-tab" data-bs-toggle="tab" href="#research-grant" role="tab" aria-controls="research-grant" aria-selected="false">
+                        <span className="material-icons-sharp">find_in_page</span>
+                        <h3>Research Grants</h3>
+                        &nbsp;
                         {rgRejected && <span className="badge badge-danger">!</span>}
                     </a>
                 </div>
@@ -119,26 +129,6 @@ function Accomplishments(props) {
                 </ResearchGrant>
             </div>
         </div>
-	<style jsx>{`
-		a.nav-item{
-			color:#000;
-		}
-		a.nav-item:focus{
-			background-color:#78b6c2;
-		}
-		a.nav-item:hover{
-			background-color:#78b6c2;
-		}
-		a.active{
-			background-color:#78b6c2;
-		}
-		a#public-service-accomplishment-tab.active{
-			background-color:#78b6c2;
-		}
-		nav{
-			background-color:#aaa;
-		}
-	`}</style>
         </Layout>
     )
   }

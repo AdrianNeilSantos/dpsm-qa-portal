@@ -48,60 +48,68 @@ class PublicationForm extends React.Component{
 			>
 				{({ values, errors, touched, isSubmitting }) => (
 					<Form id = "pubForm">
-						<hr />
-						<br />
+                    	<h2 className='center'> Add Publication Form</h2>
+                    	<hr />
 						<h6>Required</h6>
-						<div className = "form-row">
+
+						{/* 1st Row */}
+						<div className = "row pb-3">
 							<div className = "form-group col-md-6">
-								<label htmlFor = "Publication[]" className = "required-label"> Publication </label>
+								<label htmlFor = "Publication[]" className = "required-label" style={{fontSize:"16px"}}> Publication </label>
 								<Field className = "form-control" type = "text" name = "title" placeholder = "Input publication name/title" required />
 							</div>
 							<div className = "form-group col-md-6">
-								<label htmlFor = "PublicationCitation[]" className = "required-label"> Citation </label>
+								<label htmlFor = "PublicationCitation[]" className = "required-label" style={{fontSize:"16px"}}> Citation </label>
 								<Field className = "form-control" type = "text" name = "citation" placeholder = "Input full citation for publication" required />
 							</div>
 						</div>
-						<div className = "form-row">
-							<div className = "form-group col-md-3"> 
-								<label htmlFor = "PublicationURL[]"> URL </label>
-								<Field className = "form-control" type = "text" name = "url" placeholder = "Input publication URL" />
-							</div>
-							<div className = "form-group col-md-3">
-								<label htmlFor = "PublishDate[]" className = "required-label"> Date Published </label>
-								<Field type = "date" className = "form-control" name = "publicationDate" required />
-							</div>
-							<div className = "form-group col-md-3">
-	                            <label htmlFor = "PublicationProof[]"> Proof </label>
-	                            <Field type = "file" className = "form-control-file" name = "proof" id = "proof" />
-	                        </div>
+
+						{/* 2nd Row */}
+						<div className = "row pb-3">
+							<PublicationFormAuthor faculty = {this.props.faculty} />
 						</div>
-						<div className = "form-row">
+
+						{/* 3rd Row */}
+						<div className = "row pb-3">
 							<div className = "form-group col-md-12">
-								<label htmlFor = "PublicationAuthorNonDPSM[]"> Authors (non-DPSM) </label>
+								<label htmlFor = "PublicationAuthorNonDPSM[]" style={{fontSize:"16px"}}> Non-DPSM Co-Authors </label>
 								<Field className = "form-control" type = "text" name = "nonFacultyAuthors" placeholder = "Input all authors outside DPSM (separate names with commas)" />
 							</div>
 						</div>
-						<div>
-							<PublicationFormAuthor faculty = {this.props.faculty} />
+
+						{/* 4th Row */}
+						<div className = "row pb-3">
+							<div className = "form-group col-md-5"> 
+								<label htmlFor = "PublicationURL[]" style={{fontSize:"16px"}}> URL </label>
+								<Field className = "form-control" type = "text" name = "url" placeholder = "Input publication URL" />
+							</div>
+							<div className = "form-group col-md-3">
+								<label htmlFor = "PublishDate[]" className = "required-label" style={{fontSize:"16px"}}> Date Published </label>
+								<Field type = "date" className = "form-control" name = "publicationDate" required />
+							</div>
+							<div className = "form-group col-md-3">
+	                            <label htmlFor = "PublicationProof[]" style={{fontSize:"16px"}}> Proof </label>
+	                            <Field type = "file" className = "form-control-file" name = "proof" id = "proof" />
+	                        </div>
 						</div>
-						<br />
-						<button
-							type = "submit"
-							className = "btn btn-primary col-md-12"
-							disabled = {isSubmitting}
-						>
-							Submit
-						</button>
+
+						<br/>
+						<div className="center">
+							<button type = "submit" className = "btn customButton maroon" disabled = {isSubmitting}>
+								<span className="material-icons-sharp">add</span> Submit
+							</button>
+						</div>
+
 						<style jsx>{`
-		label.required-label:after{
-			content: "*";
-			color: #f00;
-		}
-		h6:before{
-			content: "* ";
-			color: #f00;
-		}
-	`}</style>
+							label.required-label:after{
+								content: "*";
+								color: #f00;
+							}
+							h6:before{
+								content: "* ";
+								color: #f00;
+							}
+						`}</style>
 					</Form>
 				)}
 			</Formik>

@@ -20,28 +20,30 @@ function AssignUnitHead(props) {
     }
 
     return (
+    <div>
+		<h2 align = "center"> Unit Head Assignment </h2>
+        <br/>
         <div>
-		    <h2 align = "center"> Unit Head Assignment </h2>
+            <p className='center' style={{fontSize:"16px"}}><b>Note:</b> Changing the value on the dropdown will automatically update the value of the incoming unit head <br/> and notify the department chair for possible approval</p>
             <div role="alert" id="assignalert" style={{visibility:"hidden"}}></div>
-            <br />
-
-            <div>
-                <p>NOTE: Changing the value on the dropdown will automatically update the value of the incoming unit head and notify the department chair for possible approval</p>
-                <table className = "table table-striped table-sm">
-                    <tbody>
+            <br/>
+            <div className='card'>
+                <table className = "table table-hover">
+                    <thead>
                         <tr>
                             <th>Incoming Unit Head</th>
                             <th>Status</th>
-                            <th>Approver Remarks</th>
+                            <th>Remarks</th>
                         </tr>
+                    </thead>
+
+                    <tbody>
                         <tr key = {props.children.unitId}>
                             <td>
                                 <form>
-                                    <select name="faculty" className = "form-control" id="faculty" onChange={async () => {
+                                    <select name="faculty" className = "form-control" style={{color: "var(--color-primary)", width: "40rem"}} id="faculty" onChange={async () => {
                                         let alert = document.getElementById("assignalert")
-
-                                        let incomingUnitHead = document.getElementById('faculty').value
-                                        
+                                        let incomingUnitHead = document.getElementById('faculty').value                       
                                         let res = await updateUnitAssignment(incomingUnitHead, props.children.unitId, props.token)
                                         if(res.success == true) { 
                                             alert.className ="alert alert-success"
@@ -65,13 +67,14 @@ function AssignUnitHead(props) {
                                     </select>
                                 </form>
                             </td>
-                            <td>{props.children.approverRemarks ? 'Rejected' : 'Pending'}</td>
-                            <td>{props.children.approverRemarks || 'None'}</td>
+                            <td style={{verticalAlign:"middle"}}>{props.children.approverRemarks ? 'Rejected' : 'Pending'}</td>
+                            <td style={{verticalAlign:"middle"}}>{props.children.approverRemarks || 'None'}</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
+    </div>
     )
   }
   

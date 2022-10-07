@@ -63,35 +63,33 @@ function ResearchGrant(props){
                 return (
                     <tr>
                         <td>{props.children[key].researchName}</td>
-                        <td>
+                        <td className="less-important-tablet">
                             { dpsmauth } 
                             {props.children[key].nonFacultyResearchers}
                         </td>
-                        <td>{props.children[key].granter}</td>
-                        <td>{props.children[key].amount}</td>
-                        <td>{props.children[key].projectedStart} to {props.children[key].projectedEnd}</td>
-                        <td>{props.children[key].actualStart}</td>
-                        <td>{props.children[key].actualEnd}</td>
-                        <td>{props.children[key].researchProgress}</td>
-                        <td>{
+                        <td className="less-important-pc">{props.children[key].granter}</td>
+                        <td className="less-important-pc">{props.children[key].amount}</td>
+                        <td className="less-important-pc">{props.children[key].projectedStart} <i>to</i> {props.children[key].projectedEnd}</td>
+                        <td className="less-important-mobile">{props.children[key].researchProgress}</td>
+                        <td className="less-important-tablet">{
                                 props.children[key].proof && 
-                                <div className = "btn-grp">
+                                <div className = "center">
                                     <button
                                         type="button"
-                                        className="btn btn-primary"
+                                        className="btn customButton-icon-only blue"
                                         onClick = {() => {
                                             let file = props.children[key].proof
                                             downloadProof(file, props.token)
                                         }}
                                     >
-                                        Download
+                                        <span className="material-icons-sharp">file_download</span>
                                     </button>
                                     <a
-                                        className ="btn btn-info"
+                                        className ="btn customButton-icon-only blue"
                                         href={process.env.UPLOADS_URL + props.children[key].proof}
                                         style = {{ color: 'white' }}
                                         target="_blank">
-                                        Preview
+                                        <span className="material-icons-sharp">visibility</span>
                                     </a>
                                 </div>
                             }
@@ -99,28 +97,42 @@ function ResearchGrant(props){
                                 !props.children[key].proof && <div>None</div>
                             }
                         </td>
-                        <td>{props.children[key].status}</td>
-                        <td>{props.children[key].approverRemarks || 'None'}</td>
+                        <td className="less-important-mobile">{props.children[key].status}</td>
+                        <td className="less-important-pc">{props.children[key].approverRemarks || 'None'}</td>
                         <td>
                         { props.editable &&
-                            <div className = "btn-group">
-                                <a className="btn btn-info" data-toggle="modal" data-target="#editResearchGrant" onClick={() => {
+                            <div>
+                                <button type="submit" className="btn customButton-icon-only blue" data-bs-toggle="modal" data-bs-target="#seeDetailsResearchGrant" onClick={() => {
                                     setEdit(props.children[key].researchId)
                                     setKey(editRes)
-                                }}>Edit</a>
-                                <a className="btn btn-danger" data-toggle="modal" data-target="#deleteResearchGrant" onClick={() => {
+                                }}>
+                                    <span className="material-icons-sharp">visibility</span>
+                                </button>
+                                <button className="btn customButton-icon-only yellow" data-bs-toggle="modal" data-bs-target="#editResearchGrant" onClick={() => {
+                                    setEdit(props.children[key].researchId)
+                                    setKey(editRes)
+                                }}>
+                                    <span class="material-icons-sharp">edit</span>
+                                </button>
+                                <button className="btn customButton-icon-only delete" data-bs-toggle="modal" data-bs-target="#deleteResearchGrant" onClick={() => {
                                     setDelete(props.children[key].researchId)
-                                }}>Delete</a>
+                                }}>
+                                    <span class="material-icons-sharp">delete</span>
+                                </button>
                             </div>
                         }
                         { props.approver &&
-                            <div className = "btn-grp">
-                                <a className="btn btn-info" data-toggle="modal" data-target="#approveResearchGrant" onClick={() => {
+                            <div className = "center">
+                                <button className="btn customButton-icon-only green" data-bs-toggle="modal" data-bs-target="#approveResearchGrant" onClick={() => {
                                     setApprove(props.children[key].researchId)
-                                }}>Approve</a>
-                                <a className="btn btn-danger" data-toggle="modal" data-target="#rejectResearchGrant" onClick={() => {
+                                }}>
+                                    <span className="material-icons-sharp">check</span>
+                                </button>
+                                <button className="btn customButton-icon-only maroon" data-bs-toggle="modal" data-bs-target="#rejectResearchGrant" onClick={() => {
                                     setApprove(props.children[key].researchId)
-                                }}>Reject</a>
+                                }}>
+                                    <span className="material-icons-sharp">close</span>
+                                </button>
                             </div>
                         }
                         </td>
@@ -130,7 +142,7 @@ function ResearchGrant(props){
         });
     }
     else{
-        content = <td colSpan = "10"><p align = "center">No data available!</p></td>
+        content = <td colSpan = "12"><br/><p className='center'>No data available.</p></td>
     }
 
     function setEdit(id) {
@@ -185,41 +197,56 @@ function ResearchGrant(props){
 
 	return(
 		<div>
-            <h2 align = "center"> Research Grants </h2>
+            <div className="center">
+                <h2 align = "center" style={{display: "inline-block", verticalAlign: "bottom"}}> Research Grants </h2>
+                {/* Add Button Trigger */}
+                { props.editable &&
+                <button type="button" className="btn customButton-icon-only maroon" data-bs-toggle="collapse" data-bs-target="#addResearch" aria-expanded="false" aria-controls="addResearch" style={{left: "1rem", position: "relative"}}>
+                    <span className="material-icons-sharp">add</span>
+                </button>
+                }
+            </div>
+
+
+            <br/>   
             <NameDisplay unit = {props.unit} position={props.position}>{props.name}</NameDisplay>
 			<div className ="alert alert-success" role="alert" id="researchalert" style={{visibility:"hidden"}}></div>
-            <div className = "table-responsive">
-	<table className = "table table-striped table-sm">
-		<tbody>
-			<tr>
-				<th>Research Project</th>
-				<th>Researcher/s</th>
-				<th>Sponsor</th>
-				<th>Amount</th>
-				<th>Projected Duration</th>
-				<th>Start Date</th>
-				<th>End Date</th>
-				<th>Research Progress</th>
-				<th>Proof</th>
-				<th>Status</th>
-                <th>Approver Remarks</th>
-                { (props.editable || props.approver) && <th>Action</th>}
-			</tr>
-            {content}
-		</tbody>
-	</table>	
-	</div>
-    { props.editable &&
-        <div>
-            <ResearchGrantForm faculty = {props.faculty} token = {props.token} />
-        </div>
-    }
+            
+            { props.editable &&
+                <div className="card collapse" id="addResearch">
+                    <ResearchGrantForm faculty = {props.faculty} token = {props.token} />
+                </div>
+            }
+                      
+            <div className = "table-container">
+                <table className="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Research Project</th>
+                            <th className="less-important-tablet">Researcher/s</th>
+                            <th className="less-important-pc">Sponsor</th>
+                            <th className="less-important-pc">Amount</th>
+                            <th className="less-important-pc">Projected Duration</th>
+                            <th className="less-important-mobile">Research Progress</th>
+                            <th className="less-important-tablet">Proof</th>
+                            <th className="less-important-mobile">Status</th>
+                            <th className="less-important-pc">Approver Remarks</th>
+                            { (props.editable || props.approver) && <th>Action</th>}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {content}
+                    </tbody>
+                </table>	
+	        </div>
+            <br/><br/>
+
         <div className="modal fade" id="editResearchGrant" tabIndex="-1" role="dialog" aria-labelledby="editResearchGrantLabel" aria-hidden="true">
             <div className="modal-dialog" role="document">
                 <div className="modal-content">
                 <div className="modal-header">
                     <h5 className="modal-title" id="editResearchGrantLabel">Update Research Grant Information</h5>
-                    <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" className="close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -272,82 +299,84 @@ function ResearchGrant(props){
                 {({ values, errors, touched, isSubmitting }) => (
                     <Form id = "editResForm">
                         <div className="modal-body">
-                            <hr />
-                            <div className = "form-row">
+
+                            <div className = "row pb-3">
                                 <div className = "form-group">
                                     <label htmlFor = "ResearchUpdate"> Research Project </label>
                                     <Field className = "form-control" type = "text" name = "researchName" placeholder = "Input research name" />
                                 </div>
                             </div>
-                            <div className = "form-row">
-                                <div className = "form-group">
+
+                            <div className = "row pb-3">
+                                <div className = "form-group col-md-5">
                                     <label htmlFor = "ResearchSponsorUpdate"> Sponsor </label>
                                     <Field className = "form-control" type = "text" name = "granter" placeholder = "Input sponsor" />
                                 </div>
-                            </div>
-                            <div className = "form-row">
-                                <div className = "form-group">
+                                <div className = "form-group col-md-4">
                                     <label htmlFor = "ResearchAmountUpdate"> Amount </label>
                                     <Field className = "form-control" type = "text" name = "amount" placeholder = "Input amount" />
                                 </div>
-                            </div>
-                            <div className = "form-row">
-                                <div className = "form-group">
-                                    <label htmlFor = "ResearchStartDateUpdate"> Start Date (Actual) </label>
-                                    <Field type = "date" className = "form-control" name = "actualStart" />
+                                <div className = "form-group col-md-3">
+                                    <label htmlFor = "ResearchProgressUpdate"> Progress </label>
+                                    <Field as = "select" className = "form-control" style={{height: "2.45rem"}} name = "researchProgress" required>
+                                        <option value = "Ongoing">Ongoing</option>
+                                        <option value = "Completed">Completed</option>
+                                    </Field>
                                 </div>
                             </div>
-                            <div className = "form-row">
-                                <div className = "form-group">
-                                    <label htmlFor = "ResearchEndDateUpdate"> End Date (Actual) </label>
-                                    <Field type = "date" className = "form-control" name = "actualEnd" />
-                                </div>
-                            </div>
-                            <div className = "form-row">
-                                <div className = "form-group">
-                                    <label htmlFor = "ResearchProjectedStartDateUpdate"> Start Date (Projected) </label>
+
+                            <div className = "row pb-3">
+                                <div className = "form-group col-md-6">
+                                    <label htmlFor = "ResearchProjectedStartDateUpdate"> Projected Start </label>
                                     <Field type = "date" className = "form-control" name = "projectedStart" />
                                 </div>
-                            </div>
-                            <div className = "form-row">
-                                <div className = "form-group">
-                                    <label htmlFor = "ResearchProjectedEndDateUpdate"> End Date (Projected) </label>
+                                <div className = "form-group col-md-6">
+                                    <label htmlFor = "ResearchProjectedEndDateUpdate"> Projected End </label>
                                     <Field type = "date" className = "form-control" name = "projectedEnd" />
                                 </div>
                             </div>
-                            <div className = "form-row">
-                                <div className = "form-group">
-                                    <label htmlFor = "ResearchProgressUpdate"> Progress </label>
-                                    <Field className = "form-control" type = "text" name = "researchProgress" placeholder = "Input progress" />
+
+                            <div className = "row pb-3">
+                                <div className = "form-group col-md-6">
+                                    <label htmlFor = "ResearchStartDateUpdate"> Actual Start </label>
+                                    <Field type = "date" className = "form-control" name = "actualStart" />
+                                </div>
+                                <div className = "form-group col-md-6">
+                                    <label htmlFor = "ResearchEndDateUpdate"> Actual End </label>
+                                    <Field type = "date" className = "form-control" name = "actualEnd" />
                                 </div>
                             </div>
-                            <div className = "form-row">
+
+                            <div className = "row pb-3">
                                     <div className = "form-group">
                                         <label htmlFor = "ResearchAuthorDPSMUpdate"> Authors (DPSM) </label>
                                         <Select
                                             name = "faculty_researchers"
                                             isMulti
-                                            options = {authors}
+                                            options = {authors} 
                                             value = {currData.faculty_researchers}
                                             onChange = {event => handleChange(event)}
                                         />
                                     </div>
                                 </div>
-                            <div className = "form-row">
+
+                            <div className = "row pb-3">
                                 <div className = "form-group">
                                     <label htmlFor = "ResearchAuthorNonDPSMUpdate"> Authors (non-DPSM) </label>
                                     <Field className = "form-control" type = "text" name = "nonFacultyResearchers" placeholder = "Input all authors outside DPSM (separate names with commas)" />
                                 </div>
                             </div>
-                            <div className = "form-row">
+
+                            <div className = "row pb-3">
                                 <div className = "form-group">
                                     <label htmlFor = "ResearchProofUpdate"> Add/Edit Proof [Uploaded: {currData.proof}] </label>
                                     <Field type = "file" className = "form-control-file" name = "proof"  value={undefined} />
                                 </div>
                             </div>
                         </div>
+
                         <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             <button type="submit" className="btn btn-primary" disabled = {isSubmitting} onClick = {() => {
                                 $('#editResearchGrant').modal('toggle');
                             }}>Save changes</button>
@@ -364,17 +393,17 @@ function ResearchGrant(props){
                 <div className="modal-content">
                 <div className="modal-header">
                     <h5 className="modal-title" id="deleteResearchGrantLabel">Delete Research Grant Information</h5>
-                    <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" className="close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div className="modal-body">
-                    <hr />
                     <p> Are you sure you want to delete this research grant information? </p>
                 </div>
                 <div className="modal-footer">
-                    <button type="button" className="btn btn-secondary" data-dismiss="modal">No, don't delete</button>
+                    <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">No, don't delete</button>
                     <button type="button" className="btn btn-danger" onClick = {async () => {
+                        $('#deleteResearchGrant').modal('toggle');
                         let alert = document.getElementById("researchalert")
                         let res = await deleteResearch(deleteRes, props.token)
                         
@@ -404,16 +433,15 @@ function ResearchGrant(props){
                     <div className="modal-content">
                     <div className="modal-header">
                         <h5 className="modal-title" id="approveResearchGrantLabel">Approve Research Grant Information</h5>
-                        <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" className="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div className="modal-body">
-                        <hr />
                         <p> Are you sure you want to approve this research grant information? </p>
                     </div>
                     <div className="modal-footer">
-                        <button type="button" className="btn btn-secondary" data-dismiss="modal">No, don't approve</button>
+                        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">No, don't approve</button>
                         <button type="button" className="btn btn-danger" onClick = {async () => {
                             let alert = document.getElementById("researchalert")
                             $('#approveResearchGrant').modal('toggle');
@@ -448,7 +476,7 @@ function ResearchGrant(props){
                     <div className="modal-content">
                     <div className="modal-header">
                         <h5 className="modal-title" id="rejectResearchGrantLabel">Reject Research Grant Information</h5>
-                        <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" className="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
@@ -484,8 +512,8 @@ function ResearchGrant(props){
                     {({ values, errors, touched, isSubmitting }) => (
                         <Form id = "rejectRGForm">
                             <div className="modal-body">
-                                <hr />
-                                <div className = "form-row">
+                                <br />
+                                <div className = "row pb-3">
                                     <div className = "form-group">
                                         <label htmlFor = "RejectionRemarks"> Reason/Remarks for Rejection </label>
                                         <Field className = "form-control" type = "text" name = "approverRemarks" placeholder = "Input remarks" required />
@@ -493,7 +521,7 @@ function ResearchGrant(props){
                                 </div>
                             </div>
                             <div className="modal-footer">
-                                <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                 <button type="submit" className="btn btn-primary" disabled = {isSubmitting} onClick = {() => {
                                     $('#rejectResearchGrant').modal('toggle');
                                 }}>Save changes</button>
@@ -505,7 +533,53 @@ function ResearchGrant(props){
                 </div>
             </div>
 
+            {/* <!-- See More Modal--> */}
+            <div className="modal fade" id="seeDetailsResearchGrant" tabIndex="-1" role="dialog" aria-hidden="true">
+                <div className="modal-dialog" role="document">
+                    <div className="modal-content">
+                    <div className="modal-header">
+                        <h5 className="modal-title">View Research Grant Information</h5>
+                        <button type="button" className="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="modal-details">
+                            <h3>Research Project: </h3>
+                            <h4>{currData.researchName}</h4>
+                            <br></br>
+                            <h3>Sponsor: </h3>
+                            <h4>{currData.granter}</h4>
+                            <br></br>
+                            <h3>Amount: </h3>
+                            <h4>{currData.amount}</h4>
+                            <br></br>
+                            <h3>Projected Start Date: </h3>
+                            <h4>{currData.projectedStart}</h4>
+                            <br></br>
+                            <h3>Projected End Date: </h3>
+                            <h4>{currData.projectedEnd}</h4>
+                            <br></br>
+                            <h3>Actual Start Date: </h3>
+                            <h4>{currData.actualStart}</h4>
+                            <br></br>
+                            <h3>Actual End Date: </h3>
+                            <h4>{currData.actualEnd}</h4>
+                            <br></br>
+                            <h3>Progress: </h3>
+                            <h4>{currData.researchProgress}</h4>
+                            <br></br>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                    </div>
+                </div>
+            </div>
 
+
+            <br/><br/>
 		</div>
 	)
 }

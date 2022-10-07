@@ -144,13 +144,12 @@ function AccomplishmentCount(props){
 
 	return(
 		<div>
-			<br />
-			<h3 align = "center">Accomplishment Count</h3>
-			
-			<div className = "form-row">
+			<br /><br/>
+			<h3 className="table-container-text" align = "center">Accomplishment Count</h3>
+			<div className = "dashboard-form-row">
 				{
 					props.role == 3 && 
-					<div className = "form-group col-md-3">
+					<div className = "dashboard-form-group col-md-3">
 						<label className = "control-label" htmlFor ="DeptUnit"> Department Unit </label>
 						<select className = "form-control" name = "DeptUnit" id="DeptUnit" defaultValue={unitId}>
 							<option value="0">All</option>
@@ -160,20 +159,19 @@ function AccomplishmentCount(props){
 						</select>
 					</div>
 				}
-
-				<div className = "form-group col-md-3">
+				<div className = "dashboard-form-group col-md-3">
 					<label className = "control-label" htmlFor ="StartTimePeriod"> From  </label>
 					<input className = "form-control" type = "date" name = "StartTimePeriod" id="StartTimePeriod" defaultValue={startDate} />
 				</div>
 
-				<div className = "form-group col-md-3">
+				<div className = "dashboard-form-group col-md-3">
 					<label className = "control-label" htmlFor ="EndTimePeriod"> To </label>
 					<input className = "form-control" type = "date" name = "EndTimePeriod" id="EndTimePeriod" defaultValue={endDate}/>
 				</div>
 				
-				<div className = "form-group col-md-3">
+				<div className = "dashboard-form-group col-md-3">
 					<br/>
-					<button className = "btn btn-info" onClick={() => {
+					<button className = "btn customButton-icon-only yellow" onClick={() => {
 						let unitId
 
 						if(props.role ==3) {
@@ -194,32 +192,33 @@ function AccomplishmentCount(props){
 							pathname: url,
 							query
 						})
-					}}> Filter</button>
+					}}> 
+						<span className="material-icons-sharp">filter_alt</span>
+					
+					</button>
 				</div>
+
 			</div>
 
+				<br/><br/>
 			<nav>
 				<div className="nav nav-tabs nav-fill nav-justified" id="nav-tab" role="tablist">
-					<a className="nav-item nav-link" id="graph-tab" data-toggle="tab" href="#graph" role="tab" aria-controls="graph" aria-selected="false">Overview</a>
-					<a className="nav-item nav-link" id="table-tab" data-toggle="tab" href="#table" role="tab" aria-controls="table" aria-selected="false">Full List</a>
+					<a className="nav-item nav-link nav-top active" id="graph-tab" data-bs-toggle="tab" href="#graph" role="tab" aria-controls="graph" aria-selected="false">
+						<span className="material-icons-sharp">equalizer</span>
+                        <h3>Overview</h3>
+					</a>
+					<a className="nav-item nav-link nav-top" id="table-tab" data-bs-toggle="tab" href="#table" role="tab" aria-controls="table" aria-selected="false">
+						<span className="material-icons-sharp">view_list</span>
+                        <h3>Full List</h3>
+					</a>
 				</div>
+
 			</nav>
 			<div className="tab-content" id="nav-tabContent">
 				<div className="tab-pane fade show active" id="graph" role="tabpanel" aria-labelledby="graph-tab"><AccomplishmentDashboardGraph data={graphData} /></div>
 				<div className="tab-pane fade" id="table" role="tabpanel" aria-labelledby="table-tab"><AccomplishmentAnalyticsTable data={tableData} /></div>
 			</div>
-                
-		<style jsx>{`
-			a.nav-item:focus{
-				background-color:#78b6c2;
-			}
-			a.nav-item:hover{
-				background-color:#78b6c2;
-			}
-			a.active{
-				background-color:#78b6c2;
-			}
-		`}</style>
+			<br/><br/>
 		</div>
 	)
 }

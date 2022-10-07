@@ -84,16 +84,16 @@ function Table ({columns, data}){
    } = useTable({ columns, data, defaultColumn, initialState: { pageIndex: 0 } }, useFilters, useGroupBy, useSortBy, useExpanded, usePagination)
 
  return(
-<div>
+<div className="table-container">
     <br />
     <ReactHTMLTableToExcel
 				id="test-table-xls-button"
-				className="btn btn-primary mb-2"
+				className="btn customButton maroon"
 				table="accomplishmentTable"
 				filename="accomplishment"
 				buttonText="Download as XLS"/>
-    <br />
-   <table className = "table table-striped" {...getTableProps()} id="accomplishmentTable">
+    <br/><br/>
+   <table className = "table table-hover" {...getTableProps()} id="accomplishmentTable">
        <thead>
          {headerGroups.map(headerGroup => (
            <tr {...headerGroup.getHeaderGroupProps()}>
@@ -135,7 +135,7 @@ function Table ({columns, data}){
                           ? '#ffa50078'
                           : cell.isPlaceholder
                           ? '#ff000042'
-                          : 'white',
+                          : 'var(--color-background)',
                       }}
                     >
                       {cell.isGrouped ? (
@@ -180,60 +180,54 @@ function Table ({columns, data}){
           </tr>
         ))}
       </tfoot>
+
      </table>
 
-	
      <div className="pagination">
-        <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
-          {'<<'}
-        </button>{' '}
-        <button onClick={() => previousPage()} disabled={!canPreviousPage}>
-          {'<'}
-        </button>{' '}
-        <button onClick={() => nextPage()} disabled={!canNextPage}>
-          {'>'}
-        </button>{' '}
-        <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
-          {'>>'}
-        </button>{' '}
-        <span>
-          Page{' '}
-          <strong>
-            {pageIndex + 1} of {pageOptions.length}
-          </strong>{' '}
-        </span>
-        <span>
-          | Go to page:{' '}
-          <input
-            type="number"
-            defaultValue={pageIndex + 1}
+          <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
+            {'<<'}
+          </button>{' '}
+          <button onClick={() => previousPage()} disabled={!canPreviousPage}>
+            {'<'}
+          </button>{' '}
+          <button onClick={() => nextPage()} disabled={!canNextPage}>
+            {'>'}
+          </button>{' '}
+          <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
+            {'>>'}
+          </button>{' '}
+          <span>
+            Page{' '}
+            <strong>
+              {pageIndex + 1} of {pageOptions.length}
+            </strong>{' '}
+          </span>
+          <span>
+            | Go to page:{' '}
+            <input
+              type="number"
+              defaultValue={pageIndex + 1}
+              onChange={e => {
+                const page = e.target.value ? Number(e.target.value) - 1 : 0
+                gotoPage(page)
+              }}
+              style={{ width: '100px' }}
+            />
+          </span>{' '}
+          <select
+            value={pageSize}
             onChange={e => {
-              const page = e.target.value ? Number(e.target.value) - 1 : 0
-              gotoPage(page)
+              setPageSize(Number(e.target.value))
             }}
-            style={{ width: '100px' }}
-          />
-        </span>{' '}
-        <select
-          value={pageSize}
-          onChange={e => {
-            setPageSize(Number(e.target.value))
-          }}
-        >
-          {[10, 20, 30, 40, 50].map(pageSize => (
-            <option key={pageSize} value={pageSize}>
-              Show {pageSize}
-            </option>
-          ))}
-        </select>
-      </div>
-      <style jsx>{`
-		table{
-			display: block;
-			overflow: x;
-			white-space: nowrap;
-		}
-	`}</style>
+          >
+            {[10, 20, 30, 40, 50].map(pageSize => (
+              <option key={pageSize} value={pageSize}>
+                Show {pageSize}
+              </option>
+            ))}
+          </select>
+        </div>
+
 </div>
  )
   
@@ -265,7 +259,7 @@ function Table ({columns, data}){
 	 disableSortBy: true
        },
        {
-         Header: 'Accomplishment Type',
+         Header: 'Category',
 	 Footer: '',
          accessor: 'col3',
 	 aggregate: 'count',
@@ -274,7 +268,7 @@ function Table ({columns, data}){
 	 disableSortBy: true
        },
        {
-         Header: 'Start Date (click to sort)',
+         Header: 'Start Date',
 	 Footer: '',
          accessor: 'col4',
 	 sortBy: 'datetime',
@@ -283,7 +277,7 @@ function Table ({columns, data}){
 	 disableFilters: true
        },
        {
-         Header: 'End Date (click to sort)',
+         Header: 'End Date',
 	 Footer: '',
          accessor: 'col5',
 	 sortBy: 'datetime',

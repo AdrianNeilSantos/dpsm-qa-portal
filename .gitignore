@@ -1,2 +1,8 @@
 # Node Modules
 node_modules/
+
+.npm
+.next
+
+#Sample Comment
+

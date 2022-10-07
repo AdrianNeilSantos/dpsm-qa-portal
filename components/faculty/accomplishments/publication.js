@@ -57,32 +57,32 @@ function Publication(props){
             return (
                 <tr key = {props.children[key].publicationId}>
                     <td>{props.children[key].title}</td>
-                    <td>                        
+                    <td className="less-important-mobile">                        
                         { dpsmauth } 
                         {props.children[key].nonFacultyAuthors}
                     </td>
-                    <td>{props.children[key].publicationDate}</td>
-                    <td>{props.children[key].url}</td>
-                    <td>{props.children[key].citation}</td>
-                    <td>{
+                    <td className="less-important-pc">{props.children[key].publicationDate}</td>
+                    <td className="less-important-pc">{props.children[key].url}</td>
+                    <td className="less-important-pc">{props.children[key].citation}</td>
+                    <td className="less-important-tablet">{
                             props.children[key].proof && 
-                            <div className = "btn-grp">
+                            <div className = "center">
                                 <button
                                     type="button"
-                                    className="btn btn-primary"
+                                    className="btn customButton-icon-only blue"
                                     onClick = {() => {
                                         let file = props.children[key].proof
                                         downloadProof(file, props.token)
                                     }}
                                 >
-                                    Download
+                                    <span className="material-icons-sharp">file_download</span>
                                 </button>
                                 <a
-                                    className ="btn btn-info"
+                                    className ="btn customButton-icon-only blue"
                                     href={process.env.UPLOADS_URL + props.children[key].proof}
                                     style = {{ color: 'white' }}
                                     target="_blank">
-                                    Preview
+                                    <span className="material-icons-sharp">visibility</span>
                                 </a>
                             </div>
                         }
@@ -90,28 +90,42 @@ function Publication(props){
                             !props.children[key].proof && <div>None</div>
                         }
                     </td>
-                    <td>{props.children[key].status}</td>
-                    <td>{props.children[key].approverRemarks || 'None'}</td>
+                    <td className="less-important-mobile">{props.children[key].status}</td>
+                    <td className="less-important-tablet">{props.children[key].approverRemarks || 'None'}</td>
                     <td>
                     { props.editable &&
-                        <div className = "btn-group">
-                            <a className="btn btn-info" data-toggle="modal" data-target="#editPublication" onClick={async () => {
+                        <div>
+                            <button type="submit" className="btn customButton-icon-only blue" data-bs-toggle="modal" data-bs-target="#seeDetailsPublication" onClick={() => {
                                 setEdit(props.children[key].publicationId)
                                 setKey(editPub)
-                            }}>Edit</a>
-                            <a className="btn btn-danger" data-toggle="modal" data-target="#deletePublication" onClick={() => {
+                            }}>
+                                <span className="material-icons-sharp">visibility</span>
+                            </button>
+                            <button className="btn customButton-icon-only yellow" data-bs-toggle="modal" data-bs-target="#editPublication" onClick={async () => {
+                                setEdit(props.children[key].publicationId)
+                                setKey(editPub)
+                            }}>
+                                <span className="material-icons-sharp">edit</span>
+                            </button>
+                            <button className="btn customButton-icon-only delete" data-bs-toggle="modal" data-bs-target="#deletePublication" onClick={() => {
                                 setDelete(props.children[key].publicationId)
-                            }}>Delete</a>
+                            }}>
+                                <span className="material-icons-sharp">delete</span>
+                            </button>
                         </div>
                     }
                     { props.approver &&
-                        <div className = "btn-grp">
-                            <a className="btn btn-info" data-toggle="modal" data-target="#approvePublication" onClick={() => {
+                        <div className = "center">
+                            <button className="btn customButton-icon-only green" data-bs-toggle="modal" data-bs-target="#approvePublication" onClick={() => {
                                 setApprove(props.children[key].publicationId)
-                            }}>Approve</a>
-                            <a className="btn btn-danger" data-toggle="modal" data-target="#rejectPublication" onClick={() => {
+                            }}>
+                                <span className="material-icons-sharp">check</span>
+                            </button>
+                            <button className="btn customButton-icon-only maroon" data-bs-toggle="modal" data-bs-target="#rejectPublication" onClick={() => {
                                 setApprove(props.children[key].publicationId)
-                            }}>Reject</a>
+                            }}>
+                                <span className="material-icons-sharp">close</span>
+                            </button>
                         </div>
                     }
                     </td>
@@ -120,7 +134,7 @@ function Publication(props){
         });
     }
     else{
-        content = <td colSpan = "7"><p align = "center">No data available!</p></td>
+        content = <td colSpan = "9"><br/><p align = "center">No data available.</p></td>
     }
 
     function setEdit(id) {
@@ -171,39 +185,60 @@ function Publication(props){
 
 	return(
 		<div>
-            <h2 align = "center"> Publications </h2>
+            <div className="center">
+                <h2 align = "center" style={{display: "inline-block" , verticalAlign: "bottom"}}> Publications </h2>
+                {/* Add Button Trigger */}
+                { props.editable &&
+                <button type="button" className="btn customButton-icon-only maroon" data-bs-toggle="collapse" data-bs-target="#addPublication" aria-expanded="false" aria-controls="addPublication" style={{left: "1rem", position: "relative"}}>
+                    <span className="material-icons-sharp">add</span>
+                </button>
+                }
+            </div>
+
+            <br/>
+
             <NameDisplay unit = {props.unit} position={props.position}>{props.name}</NameDisplay>
             <div className ="alert alert-success" role="alert" id="publicationalert" style={{visibility:"hidden"}}></div>
-			<div className = "table-responsive">
-	<table className = "table table-striped table-sm">
-		<tbody>
-			<tr>
-				<th className = "widen">Publication</th>
-				<th className = "widen" >Author/s</th>
-				<th>Publication Date</th>
-				<th>URL</th>
-				<th className = "widen">Citation</th>
-				<th>Proof</th>
-				<th>Status</th>
-                <th>Approver Remarks</th>
-                { (props.editable || props.approver) && <th>Action</th>}
-			</tr>
-            {content}
-		</tbody>
-	</table>	
-	</div>
-    { props.editable && 
-        <div>
-            <PublicationForm faculty = {props.faculty} token = {props.token} />
-        </div>
-    }
+            
+            { props.editable && 
+                <div className="card collapse" id="addPublication">
+                    <PublicationForm faculty = {props.faculty} token = {props.token} />
+                </div>
+            }
+            
+			<div className = "table-container">
+                <table className="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Publication</th>
+                            <th className="less-important-mobile">Author/s</th>
+                            <th className="less-important-pc">Publication Date</th>
+                            <th className="less-important-pc">URL</th>
+                            <th className="less-important-pc">Citation</th>
+                            <th className="less-important-tablet">Proof</th>
+                            <th className="less-important-mobile">Status</th>
+                            <th className="less-important-tablet">Approver Remarks</th>
+                            { (props.editable || props.approver) && <th>Action</th>}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {content}
+                    </tbody>
+                </table>	
+	        </div>
+            <br/>
+
+
+
+
+
 
 	       <div className="modal fade" id="editPublication" tabIndex="-1" role="dialog" aria-labelledby="editPublicationLabel" aria-hidden="true">
                 <div className="modal-dialog" role="document">
                     <div className="modal-content">
                     <div className="modal-header">
                         <h5 className="modal-title" id="editPublicationLabel">Update Publication Information</h5>
-                        <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" className="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
@@ -256,32 +291,31 @@ function Publication(props){
                     {({ values, errors, touched, isSubmitting, setFieldValue }) => (
                         <Form id = "editPubForm">
                             <div className="modal-body">
-                                <hr />
-                                <div className = "form-row">
+                                <div className = "row pb-3">
                                     <div className = "form-group">
                                         <label htmlFor = "PublicationUpdate"> Publication </label>
                                         <Field className = "form-control" type = "text" name = "title" placeholder = "Input publication name/title" />
                                     </div>
                                 </div>
-                                <div className = "form-row">
+                                <div className = "row pb-3">
                                     <div className = "form-group">
                                         <label htmlFor = "PublicationCitationUpdate"> Citation </label>
                                         <Field className = "form-control" type = "text" name = "citation" placeholder = "Input full citation for publication" />
                                     </div>
                                 </div>
-                                <div className = "form-row">
+                                <div className = "row pb-3">
                                     <div className = "form-group">
                                         <label htmlFor = "PublicationURLUpdate"> URL </label>
                                         <Field className = "form-control" type = "text" name = "url" placeholder = "Input publication URL" />
                                     </div>
                                 </div>
-                                <div className = "form-row">
+                                <div className = "row pb-3">
                                     <div className = "form-group">
                                         <label htmlFor = "PublishDateUpdate"> Date Published </label>
                                         <Field type = "date" className = "form-control" name = "publicationDate" />
                                     </div>
                                 </div>
-                                <div className = "form-row">
+                                <div className = "row pb-3">
                                     <div className = "form-group">
                                         <label htmlFor = "PublicationAuthorDPSMUpdate"> Authors (DPSM) </label>
                                         <Select
@@ -293,13 +327,13 @@ function Publication(props){
                                         />
                                     </div>
                                 </div>
-                                <div className = "form-row">
+                                <div className = "row pb-3">
                                     <div className = "form-group">
                                         <label htmlFor = "PublicationAuthorNonDPSMUpdate"> Authors (non-DPSM) </label>
                                         <Field className = "form-control" type = "text" name = "nonFacultyAuthors" placeholder = "Input all authors outside DPSM (separate names with commas)" />
                                     </div>
                                 </div>
-                                <div className = "form-row">
+                                <div className = "row pb-3">
                                     <div className = "form-group">
                                         <label htmlFor = "PublicationProofUpdate"> Add/Edit Proof [Uploaded: {currData.proof}] </label>
                                         <Field type = "file" className = "form-control-file" name = "proof" value={undefined} />
@@ -307,7 +341,7 @@ function Publication(props){
                                 </div>
                             </div>
                             <div className="modal-footer">
-                                <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                 <button type="submit" className="btn btn-primary" disabled = {isSubmitting} onClick = {() => {
                                     $('#editPublication').modal('hide');
                                 }}>Save changes</button>
@@ -324,17 +358,17 @@ function Publication(props){
                     <div className="modal-content">
                     <div className="modal-header">
                         <h5 className="modal-title" id="deletePublicationLabel">Delete Publication Information</h5>
-                        <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" className="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div className="modal-body">
-                        <hr />
                         <p> Are you sure you want to delete this publication information? </p>
                     </div>
                     <div className="modal-footer">
-                        <button type="button" className="btn btn-secondary" data-dismiss="modal">No, don't delete</button>
+                        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">No, don't delete</button>
                         <button type="button" className="btn btn-danger" onClick = {async () => {
+                            $('#deletePublication').modal('toggle');
                             let alert = document.getElementById("publicationalert")
                             let res = await deletePublication(deletePub, props.token)
                             
@@ -364,16 +398,15 @@ function Publication(props){
                     <div className="modal-content">
                     <div className="modal-header">
                         <h5 className="modal-title" id="approvePublicationLabel">Approve Publication Information</h5>
-                        <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" className="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div className="modal-body">
-                        <hr />
                         <p> Are you sure you want to approve this publication information? </p>
                     </div>
                     <div className="modal-footer">
-                        <button type="button" className="btn btn-secondary" data-dismiss="modal">No, don't approve</button>
+                        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">No, don't approve</button>
                         <button type="button" className="btn btn-danger" onClick = {async () => {
                             let alert = document.getElementById("publicationalert")
                             $('#approvePublication').modal('toggle');
@@ -408,7 +441,7 @@ function Publication(props){
                     <div className="modal-content">
                     <div className="modal-header">
                         <h5 className="modal-title" id="rejectPublicationLabel">Reject Publication Information</h5>
-                        <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" className="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
@@ -444,8 +477,7 @@ function Publication(props){
                     {({ values, errors, touched, isSubmitting }) => (
                         <Form id = "rejectPubForm">
                             <div className="modal-body">
-                                <hr />
-                                <div className = "form-row">
+                                <div className = "row pb-3">
                                     <div className = "form-group">
                                         <label htmlFor = "RejectionRemarks"> Reason/Remarks for Rejection </label>
                                         <Field className = "form-control" type = "text" name = "approverRemarks" placeholder = "Input remarks" required />
@@ -453,7 +485,7 @@ function Publication(props){
                                 </div>
                             </div>
                             <div className="modal-footer">
-                                <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                 <button type="submit" className="btn btn-primary" disabled = {isSubmitting} onClick = {() => {
                                     $('#rejectPublication').modal('toggle');
                                 }}>Save changes</button>
@@ -464,11 +496,45 @@ function Publication(props){
                     </div>
                 </div>
             </div>
-		<style jsx>{`
-			th.widen{
-				width: 30%;
-			}
-		`}</style>
+
+
+        {/* <!-- See More Modal--> */}
+        <div className="modal fade" id="seeDetailsPublication" tabIndex="-1" role="dialog" aria-hidden="true">
+            <div className="modal-dialog" role="document">
+                <div className="modal-content">
+                <div className="modal-header">
+                    <h5 className="modal-title">View Publication Information</h5>
+                    <button type="button" className="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-details">
+                        <h3>Title: </h3>
+                        <h4>{currData.title}</h4>
+                        <br></br>
+                        <h3>Publication Date: </h3>
+                        <h4>{currData.publicationDate}</h4>
+                        <br></br>
+                        <h3>Citation: </h3>
+                        <h4>{currData.citation}</h4>
+                        <br></br>
+                        <h3>URL: </h3>
+                        <h4>{currData.url}</h4>
+                        <br></br>
+                        <h3>Non-Faculty Authors: </h3>
+                        <h4>{currData.nonFacultyAuthors}</h4>
+                        <br></br>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+                </div>
+            </div>
+        </div>
+        
+        <br/><br/>
 		</div>
 	)
 }

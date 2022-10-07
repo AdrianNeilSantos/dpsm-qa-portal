@@ -7,14 +7,25 @@ import Faculty from "../../components/faculty/facultyList"
 
 function FacultyList(props) {
     return (
-        <Layout userId={props.data.userId} role={props.data.role} name={props.data.name}>
-			<br />
-			<h2 align="center">Faculty List</h2>
-            <Link href = "/admin/faculty"><button type="button" className="btn btn-primary float-right">Add Faculty</button></Link>
-	    <Link href = "/admin/generate-reports"><button type="button" className="btn btn-primary float-right">Generate Reports</button></Link>
-            <br />
-            <Faculty path="admin" role={props.data.role} token={props.token.user}>{props.facultyList}</Faculty>
-        </Layout>
+            <div>
+                <Layout userId={props.data.userId} role={props.data.role} name={props.data.name}>
+                    <br />
+                    <h2 style={{display: "inline-block"}}>List of Faculty</h2>
+                    <Link href = "/admin/faculty">
+                        <button type="button" className="btn customButton-icon-only maroon" style={{marginLeft: "1rem", marginBottom: "1rem"}}>
+                            <span className="material-icons-sharp">add</span>
+                        </button>
+                    </Link>
+                    <Link href = "/admin/generate-reports">
+                        <button type="button" className="btn customButton-icon-only yellow" style={{marginLeft: "1rem", marginBottom: "1rem"}}>
+                            <span className="material-icons-sharp">download</span>
+                        </button>
+                    </Link>
+                    <br />
+                    <Faculty path="admin" role={props.data.role} token={props.token.user}>{props.facultyList}</Faculty>
+                </Layout>
+             </div>
+
     )
   }
 

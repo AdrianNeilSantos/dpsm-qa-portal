@@ -55,6 +55,7 @@ function FacultyList(props){
 						statusClass = 'disabled btn '
 						faculty[index].faculty_personal_info.user.status == 'Active' ? statusClass +='btn-warning' : statusClass += 'btn-danger'
 					}
+					
 					return (
 						<tr>
 							<td>
@@ -69,19 +70,21 @@ function FacultyList(props){
 
 							{
 								props.path != 'approval' &&
-								<td><span className={statusClass}>{faculty[index].faculty_personal_info.user.status}</span></td>
+								<td className="less-important-mobile"><span className={statusClass}>{faculty[index].faculty_personal_info.user.status}</span></td>
 							}
 							{
 								props.path != 'approval' &&
-								<td>{faculty[index].faculty_personal_info.user.remarks || 'None'}</td>
+								<td className="less-important-mobile">{faculty[index].faculty_personal_info.user.remarks || 'None'}</td>
 							}
 							{
 								props.role == 5 &&
 								<td>
-									<a className="btn btn-info" data-toggle="modal" data-dismiss="modal" data-target="#editStatus" onClick={() => {
+									<button className="btn customButton-icon-only yellow" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#editStatus" onClick={() => {
 										setEdit(faculty[index].faculty_personal_info.user.userId)
 										setKey(user)
-									}}>Edit</a>
+									}}>
+										<span className="material-icons-sharp">edit</span>
+									</button>
 								</td>
 							}
 						</tr>
@@ -90,26 +93,32 @@ function FacultyList(props){
 
 				return (
 					<div>
-						<h4 align = "center"> {props.children[key].unit} </h4>
-						<div className = "table-responsive">
-						<table className = "table">
-							<tr>
-								<th>Name</th>
-								{
-								props.path != 'approval' &&
-								<th>Status</th>
-								}
-								{
-								props.path != 'approval' &&
-								<th>Remarks</th>
-								}
-								{
-									props.role == 5 &&
-									<th>Action</th>
-								}
-							</tr>
-							{facultyList}
-						</table>
+						{/* Table Title */}
+						<h3 className="table-container-text" align = "center"> {props.children[key].unit} </h3>
+						<div className="table-container">
+							<table className="table table-hover">
+								<thead>
+									<tr>
+										<th className="table-name">Name</th>
+										{
+										props.path != 'approval' &&
+										<th className="less-important-mobile">Status</th>
+										}
+										{
+										props.path != 'approval' &&
+										<th className="less-important-mobile">Remarks</th>
+										}
+										{
+											props.role == 5 &&
+											<th>Action</th>
+										}
+									</tr>
+								</thead>
+								<tbody>
+									{/* tbody starts here */}
+									{facultyList}
+								</tbody>
+							</table>
 						</div>
 					</div>
 				); 
@@ -146,19 +155,21 @@ function FacultyList(props){
 							</td>
 							{
 								props.path != 'approval' &&
-								<td><span className={statusClass}>{faculty[index].faculty_personal_info.user.status}</span></td>
+								<td className="less-important-mobile"><span className={statusClass}>{faculty[index].faculty_personal_info.user.status}</span></td>
 							}
 							{
 								props.path != 'approval' &&
-								<td>{faculty[index].faculty_personal_info.user.remarks || 'None'}</td>
+								<td className="less-important-mobile">{faculty[index].faculty_personal_info.user.remarks || 'None'}</td>
 							}
 							{
 								props.role == 5 &&
 								<td>
-									<a className="btn btn-info" data-toggle="modal" data-dismiss="modal" data-target="#editStatus" onClick={() => {
+									<button className="btn customButton-icon-only yellow" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#editStatus" onClick={() => {
 										setEdit(faculty[index].faculty_personal_info.user.userId)
 										setKey(user)
-									}}>Edit</a>
+									}}>
+									<span className="material-icons-sharp">edit</span>
+									</button>
 								</td>
 							}
 						</tr>
@@ -167,26 +178,31 @@ function FacultyList(props){
 
 				return (
 					<div>
-						<h4 align = "center"> {props.children[key].unit} </h4>
-						<div className = "table-responsive">
-						<table className = "table">
-							<tr>
-								<th>Name</th>
-								{
-								props.path != 'approval' &&
-								<th>Status</th>
-								}
-								{
-								props.path != 'approval' &&
-								<th>Remarks</th>
-								}
-								{
-									props.role == 5 &&
-									<th>Action</th>
-								}
-							</tr>
-							{facultyList}
-						</table>
+						<br/><br/>
+						<h3 className="table-container-text" align = "center"> {props.children[key].unit} </h3>
+						<div className = "table-container">
+							<table className="table table-hover">
+								<thead>
+									<tr>
+										<th className="table-name">Name</th>
+										{
+										props.path != 'approval' &&
+										<th className="less-important-mobile">Status</th>
+										}
+										{
+										props.path != 'approval' &&
+										<th className="less-important-mobile">Remarks</th>
+										}
+										{
+											props.role == 5 &&
+											<th>Action</th>
+										}
+									</tr>
+								</thead>
+								<tbody>
+									{facultyList}
+								</tbody>
+							</table>
 						</div>
 					</div>
 				); 
@@ -223,19 +239,21 @@ function FacultyList(props){
 							</td>
 							{
 								props.path != 'approval' &&
-								<td><span className={statusClass}>{faculty[index].faculty_personal_info.user.status}</span></td>
+								<td className="less-important-mobile"><span className={statusClass}>{faculty[index].faculty_personal_info.user.status}</span></td>
 							}
 							{
 								props.path != 'approval' &&
-								<td>{faculty[index].faculty_personal_info.user.remarks || 'None'}</td>
+								<td className="less-important-mobile">{faculty[index].faculty_personal_info.user.remarks || 'None'}</td>
 							}
 							{
 								props.role == 5 &&
 								<td>
-									<a className="btn btn-info" data-toggle="modal" data-dismiss="modal" data-target="#editStatus" onClick={() => {
+									<button className="btn customButton-icon-only yellow" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#editStatus" onClick={() => {
 										setEdit(faculty[index].faculty_personal_info.user.userId)
 										setKey(user)
-									}}>Edit</a>
+									}}>
+										<span className="material-icons-sharp">edit</span>
+									</button>
 								</td>
 							}
 						</tr>
@@ -244,26 +262,31 @@ function FacultyList(props){
 
 				return (
 					<div>
-						<h4 align = "center"> {props.children[key].unit} </h4>
-						<div className = "table-responsive">
-						<table className = "table">
-							<tr>
-								<th>Name</th>
-								{
-								props.path != 'approval' &&
-								<th>Status</th>
-								}
-								{
-								props.path != 'approval' &&
-								<th>Remarks</th>
-								}
-								{
-									props.role == 5 &&
-									<th>Action</th>
-								}
-							</tr>
-							{facultyList}
-						</table>
+						<br/><br/>
+						<h3 className="table-container-text" align = "center"> {props.children[key].unit} </h3>
+						<div className = "table-container">
+							<table className="table table-hover">
+								<thead>
+									<tr>
+										<th className="table-name">Name</th>
+										{
+										props.path != 'approval' &&
+										<th className="less-important-mobile">Status</th>
+										}
+										{
+										props.path != 'approval' &&
+										<th className="less-important-mobile">Remarks</th>
+										}
+										{
+											props.role == 5 &&
+											<th>Action</th>
+										}
+									</tr>
+								</thead>
+								<tbody>
+									{facultyList}
+								</tbody>
+							</table>
 						</div>
 					</div>
 				); 
@@ -293,18 +316,14 @@ function FacultyList(props){
 		}
     } 
     else{ 
-        return(<p align = "center">No approvals needed!</p>)
+        return(<p align = "center">No approvals needed.</p>)
     }
 
 	return(
 		<div>
-			<br />
 			<div className ="alert alert-success" role="alert" id="facultyStatusalert" style={{visibility:"hidden"}}></div>
-			<br />
 			{chem}
-			<br />
 			{mcsu}
-			<br />
 			{physgeo}
 
 			<div className="modal fade" id="editStatus" tabIndex="-1" role="dialog" aria-labelledby="editStatus" aria-hidden="true">
@@ -312,14 +331,13 @@ function FacultyList(props){
                     <div className="modal-content">
                     <div className="modal-header">
                         <h5 className="modal-title" id="editStatus">Update Faculty Status - {currData.facultyName}</h5>
-                        <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" className="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div className="modal-body">
                         <form>
-                            <hr />
-                            <div className = "form-row">
+                            <div className = "row pb-3">
                             	<div className = "form-group">
 									<label htmlFor = "Status"> Status </label>
 									<select className = "form-control" name="Status" id="Status" value = { currData.status } onChange = {(e) => handleInputChange("status", e)}>
@@ -329,7 +347,7 @@ function FacultyList(props){
 								</div>
 							</div>
 							
-							<div className = "form-row" id="activeremarksrow" style={{display: activeRemarksStyle}}>
+							<div className = "row pb-3" id="activeremarksrow" style={{display: activeRemarksStyle}}>
 								<div className = "form-group">
 									<label htmlFor = "Remarks"> Remarks </label>
 									<select className = "form-control" name="Remarks" id="Remarks" value = { currData.remarks || ''} onChange = {(e) => handleInputChange("remarks", e)}>
@@ -339,7 +357,7 @@ function FacultyList(props){
 								</div>
 							</div>
 
-							<div className = "form-row" id="inactiveremarksrow" style={{display: inactiveRemarksStyle}}>
+							<div className = "row pb-3" id="inactiveremarksrow" style={{display: inactiveRemarksStyle}}>
 								<div className = "form-group">
 									<label htmlFor = "Remarks"> Remarks </label>
 									<select className = "form-control" name="Remarks" id="Remarks" value = { currData.remarks || ''} onChange = {(e) => handleInputChange("remarks", e)}>
@@ -349,11 +367,10 @@ function FacultyList(props){
 									</select>
 								</div>
 							</div>
-							
                         </form>
                     </div>
                     <div className="modal-footer">
-                        <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         <button type="button" className="btn btn-primary" onClick = {async () => {
                             $('#editStatus').modal('toggle');
                             let alert = document.getElementById("facultyStatusalert")
@@ -377,7 +394,7 @@ function FacultyList(props){
                     </div>
                 </div>
             </div>
-        
+			<br/>
 		</div>
 	)
 }

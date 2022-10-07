@@ -60,43 +60,43 @@ class FacultyLoadForm extends React.Component{
             >
                 {({ values, errors, touched, isSubmitting }) => (
                     <Form id = "facLoadForm">
-                        <hr />
-                        <h5>Add Faculty Load</h5>
-                        <br/>
-                        <div className = "form-row">
+                        <h2 className="center">Add Faculty Load Form</h2>
+                        <hr/>
+                        <div className = "row pb-3">
                             <Field className = "form-control" type = "hidden" name = "facultyId" value = {this.props.facultyId} />
-                            <div className = "form-group col-md-2">
-                                <label htmlFor = "Subject"> Subject </label>
-                                <Field className = "form-control" type = "text" name = "subject" placeholder = "Input subject" required />
+                            <div className = "form-group col-md-3">
+                                <label htmlFor = "Subject" style={{fontSize:"16px"}}> Subject </label>
+                                <Field className = "form-control" type = "text"  name = "subject" placeholder = "Input subject" required />
                             </div>
-                            <div className = "form-group col-md-2">
-                                <label htmlFor = "Section"> Section </label>
+                            <div className = "form-group col-md-3">
+                                <label htmlFor = "Section" style={{fontSize:"16px"}}> Section </label>
                                 <Field className = "form-control" type = "text" name = "section" placeholder = "Input section" required />
                             </div>
                             <div className = "form-group col-md-3">
-                                <label htmlFor = "Semester"> Semester </label>
-                                <Field as = "select" className = "form-control" name = "semester" required>
+                                <label htmlFor = "Semester" style={{fontSize:"16px"}}> Semester </label>
+                                <Field as = "select" className = "form-control" style={{height:"2.45rem"}} name = "semester" required>
                                     <option value = "1st">1st Semester</option>
                                     <option value = "2nd">2nd Semester</option>
                                     <option value = "Midyear">Mid-Year</option>
                                 </Field>
                             </div>
-                            <div className = "form-group col-md-2">
-                                <label htmlFor = "Year"> Academic Year </label>
-                                <Field as = "select" className = "form-control" name = "academicYear" required>
+                            <div className = "form-group col-md-3">
+                                <label htmlFor = "Year" style={{fontSize:"16px"}}> Academic Year </label>
+                                <Field as = "select" className = "form-control" style={{height:"2.45rem"}} name = "academicYear" required>
                                     {options}
                                 </Field>
                             </div>
                         </div>
                         
                         <br />
-                        <button
-                            type = "submit"
-                            className = "btn btn-primary col-md-12"
-                            disabled = {isSubmitting}
-                        >
-                            Submit
-                        </button>
+                        <div className="center">
+                            <button type = "submit" className = "btn customButton maroon" disabled = {isSubmitting}> 
+                                <span class="material-icons-sharp">
+                                    check_circle
+                                </span>
+                                Submit
+                            </button>
+                        </div>
                     </Form>
                 )}
             </Formik>

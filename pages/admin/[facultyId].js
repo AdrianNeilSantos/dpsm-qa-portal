@@ -16,102 +16,103 @@ function BasicInfo(props) {
     return (
         <Layout userId={props.data.userId} role={props.data.role} name={props.data.name}>
             <nav>
-            <div className="nav nav-tabs nav-justified flex-column flex-md-row" id="nav-tab-main" role="tablist">
-				<a className="nav-item nav-link active" id="basic-info-tab" data-toggle="tab" href="#basic-info" role="tab" aria-controls="basic-info" aria-selected="true">Basic Information</a>
-				<a className="nav-item nav-link" id="accomplishments-tab" data-toggle="tab" href="#accomplishments" role="tab" aria-controls="accomplishments" aria-selected="false">Accomplishments</a>
-				<a className="nav-item nav-link" id="faculty-load-tab" data-toggle="tab" href="#faculty-load" role="tab" aria-controls="faculty-load" aria-selected="false">Faculty Load</a>
-            </div>
-            <div className="tab-content" id="nav-tabContent-main">
-	    		<div className="tab-pane fade show active" id="basic-info" role="tabpanel" aria-labelledby="basic-info-tab">
-				    <nav>
-           				<div className="nav nav-tabs nav-justified flex-column flex-md-row" id="nav-tab-basic-info" role="tablist">
-                            <a className="nav-item nav-link active" id="personal-info-tab" data-toggle="tab" href="#personal-info" role="tab" aria-controls="personal-info" aria-selected="true">Personal Information</a>
-                            <a className="nav-item nav-link" id="educ-tab" data-toggle="tab" href="#educ" role="tab" aria-controls="educ" aria-selected="false">Education</a>
-                            <a className="nav-item nav-link" id="work-exp-tab" data-toggle="tab" href="#work-exp" role="tab" aria-controls="work-exp" aria-selected="false">Work Experience</a>
-                        </div>
-                    </nav>
-				    <div className="tab-content" id="nav-tabContent-basic-info">
-                        <div className="tab-pane fade show active" id="personal-info" role="tabpanel" aria-labelledby="personal-info-tab">
-                            <PersonalInfo token = { props.token.user } unit = {props.unit} position={props.position} hasDisabledFields={true}>{ props.personalInfo }</PersonalInfo>
-                        </div>
-                        <div className="tab-pane fade" id="educ" role="tabpanel" aria-labelledby="educ-tab">
-                            <Education name = { props.name } token = { props.token.user } unit = {props.unit} position={props.position}>{ props.education }</Education>
-                        </div>
-                        <div className="tab-pane fade" id="work-exp" role="tabpanel" aria-labelledby="work-exp-tab">
-                            <WorkExperience name = { props.name } token = { props.token.user } unit = {props.unit} position={props.position} employment = { props.employment } role={props.data.role} facultyId={props.pathFacultyId} positionsList={props.positionsList}>{ props.workExperience }</WorkExperience>
-                        </div>
-                    </div>
+                <div className="nav nav-tabs nav-justified flex-column flex-md-row" id="nav-tab-main" role="tablist">
+                    <a className="nav-item nav-link active nav-top" id="basic-info-tab" data-bs-toggle="tab" href="#basic-info" role="tab" aria-controls="basic-info" aria-selected="true">
+                        <span className="material-icons-sharp">person</span>
+                        <h3>Basic Information</h3>
+                    </a>
+                    <a className="nav-item nav-link nav-top" id="accomplishments-tab" data-bs-toggle="tab" href="#accomplishments" role="tab" aria-controls="accomplishments" aria-selected="false">
+                        <span className="material-icons-sharp">emoji_events</span>
+                        <h3>Accomplishment</h3>
+                    </a>
+                    <a className="nav-item nav-link nav-top" id="faculty-load-tab" data-bs-toggle="tab" href="#faculty-load" role="tab" aria-controls="faculty-load" aria-selected="false">
+                        <span className="material-icons-sharp">work</span>
+                        <h3>Faculty Load</h3>
+                    </a>
                 </div>
-                <div className="tab-pane fade" id="accomplishments" role="tabpanel" aria-labelledby="accomplishments-tab">
-                    <nav>
-                        <div className="nav nav-tabs nav-justified flex-column flex-md-row" id="nav-tab-accomplishment" role="tablist">
-                            <a className="nav-item nav-link active" id="public-service-accomplishment-tab" data-toggle="tab" href="#public-service-accomplishment" role="tab" aria-controls="public-service-accomplishment" aria-selected="true">Public Service Accomplishments</a>
-                            <a className="nav-item nav-link" id="publication-tab" data-toggle="tab" href="#publication" role="tab" aria-controls="publication" aria-selected="false">Publications</a>
-                            <a className="nav-item nav-link" id="training-seminar-tab" data-toggle="tab" href="#training-seminar" role="tab" aria-controls="training-seminar" aria-selected="false">Training/Seminars</a>
-                            <a className="nav-item nav-link" id="licensure-exam-tab" data-toggle="tab" href="#licensure-exam" role="tab" aria-controls="licensure-exam" aria-selected="false">Licensure Exams</a>
-                            <a className="nav-item nav-link" id="research-grant-tab" data-toggle="tab" href="#research-grant" role="tab" aria-controls="research-grant" aria-selected="false">Research Grants</a>
-                        </div>
-                    </nav>
-                    <div className="tab-content" id="nav-tabContent-accomplishment">
-                        <div className="tab-pane fade show active" id="public-service-accomplishment" role="tabpanel" aria-labelledby="public-service-accomplishment-tab">
-                            <PublicServiceAccomplishment name = { props.name } token = { props.token.user } unit = {props.unit} position={props.position}>{ props.publicService }</PublicServiceAccomplishment>
-                        </div>
-                        <div className="tab-pane fade" id="publication" role="tabpanel" aria-labelledby="publication-tab">
-                            <Publication faculty = { props.faculty } name = { props.name } token = { props.token.user } unit = {props.unit} position={props.position} facultyId={props.pathFacultyId} role={props.data.role} >{ props.publications }</Publication></div>
-                        <div className="tab-pane fade" id="training-seminar" role="tabpanel" aria-labelledby="training-seminar-tab">
-                            <TrainingSeminar name = { props.name } token = { props.token.user } unit = {props.unit} position={props.position}>{ props.trainingSeminar }</TrainingSeminar>
-                        </div>
-                        <div className="tab-pane fade" id="licensure-exam" role="tabpanel" aria-labelledby="licensure-exam-tab">
-                            <LicensureExam name = { props.name } token = { props.token.user } unit = {props.unit} position={props.position}>{ props.licensureExam }</LicensureExam>
-                        </div>
-                        <div className="tab-pane fade" id="research-grant" role="tabpanel" aria-labelledby="research-grant-tab">
-                            <ResearchGrant faculty = { props.faculty } name = { props.name } token = { props.token.user } unit = {props.unit} position={props.position} facultyId={props.pathFacultyId} role={props.data.role}>{ props.researchGrant }</ResearchGrant>
-                        </div>
-                    </div>
-                </div>
-                <div className="tab-pane fade" id="faculty-load" role="tabpanel" aria-labelledby="faculty-load-tab">
-                    <FacultyLoader name = { props.name } token = { props.token.user } unit = {props.unit} position={props.position} facultyId={props.pathFacultyId} role={props.data.role} editClass = {false}>{ props.facultyLoad }</FacultyLoader>
-                </div>
-            </div>
+                <div className="tab-content" id="nav-tabContent-main">
+                    <div className="tab-pane fade show active" id="basic-info" role="tabpanel" aria-labelledby="basic-info-tab">
+                        <nav>
+                            <div className="nav nav-tabs nav-justified flex-column flex-md-row" id="nav-tab-basic-info" role="tablist">
+                                <a className="nav-item nav-link active nav-top" id="personal-info-tab" data-bs-toggle="tab" href="#personal-info" role="tab" aria-controls="personal-info" aria-selected="true">
+                                    <span className="material-icons-sharp">contact_page</span>
+                                    <h3>Personal Information</h3>
+                                </a>
+                                <a className="nav-item nav-link nav-top" id="educ-tab" data-bs-toggle="tab" href="#educ" role="tab" aria-controls="educ" aria-selected="false">
+                                    <span className="material-icons-sharp">school</span>
+                                    <h3>Education</h3>
+                                </a>
+                                <a className="nav-item nav-link nav-top" id="work-exp-tab" data-bs-toggle="tab" href="#work-exp" role="tab" aria-controls="work-exp" aria-selected="false">
+                                    <span className="material-icons-sharp">work_history</span>
+                                    <h3>Work Experience</h3>
+                                </a>
+                            </div>
+                            <br/><br/>
+                        </nav>
 
+                        <div className="tab-content" id="nav-tabContent-basic-info">
+                            <div className="tab-pane fade show active" id="personal-info" role="tabpanel" aria-labelledby="personal-info-tab">
+                                <PersonalInfo token = { props.token.user } unit = {props.unit} position={props.position} hasDisabledFields={true}>{ props.personalInfo }</PersonalInfo>
+                            </div>
+                            <div className="tab-pane fade" id="educ" role="tabpanel" aria-labelledby="educ-tab">
+                                <Education name = { props.name } token = { props.token.user } unit = {props.unit} position={props.position}>{ props.education }</Education>
+                            </div>
+                            <div className="tab-pane fade" id="work-exp" role="tabpanel" aria-labelledby="work-exp-tab">
+                                <WorkExperience name = { props.name } token = { props.token.user } unit = {props.unit} position={props.position} employment = { props.employment } role={props.data.role} facultyId={props.pathFacultyId} positionsList={props.positionsList}>{ props.workExperience }</WorkExperience>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="tab-pane fade" id="accomplishments" role="tabpanel" aria-labelledby="accomplishments-tab">
+                        <nav>
+                            <div className="nav nav-tabs nav-justified flex-column flex-md-row" id="nav-tab-accomplishment" role="tablist">
+                                <a className="nav-item nav-link active nav-top" id="public-service-accomplishment-tab" data-bs-toggle="tab" href="#public-service-accomplishment" role="tab" aria-controls="public-service-accomplishment" aria-selected="true">
+                                    <span className="material-icons-sharp">groups</span>
+                                    <h3>Public Service</h3>
+                                </a>
+                                <a className="nav-item nav-link nav-top" id="publication-tab" data-bs-toggle="tab" href="#publication" role="tab" aria-controls="publication" aria-selected="false">
+                                    <span className="material-icons-sharp">article</span>
+                                    <h3>Publications</h3>
+                                </a>
+                                <a className="nav-item nav-link nav-top" id="training-seminar-tab" data-bs-toggle="tab" href="#training-seminar" role="tab" aria-controls="training-seminar" aria-selected="false">
+                                    <span className="material-icons-sharp">fitness_center</span>
+                                    <h3>Trainings & Seminars</h3>
+                                </a>
+                                <a className="nav-item nav-link nav-top" id="licensure-exam-tab" data-bs-toggle="tab" href="#licensure-exam" role="tab" aria-controls="licensure-exam" aria-selected="false">
+                                    <span className="material-icons-sharp">contact_emergency</span>
+                                    <h3>Licensure Exams</h3> 
+                                </a>
+                                <a className="nav-item nav-link nav-top" id="research-grant-tab" data-bs-toggle="tab" href="#research-grant" role="tab" aria-controls="research-grant" aria-selected="false">
+                                    <span className="material-icons-sharp">find_in_page</span>
+                                    <h3>Research Grants</h3>
+                                </a>
+                            </div>
+                            <br/><br/>
+                        </nav>
+                        <div className="tab-content" id="nav-tabContent-accomplishment">
+                            <div className="tab-pane fade show active" id="public-service-accomplishment" role="tabpanel" aria-labelledby="public-service-accomplishment-tab">
+                                <PublicServiceAccomplishment name = { props.name } token = { props.token.user } unit = {props.unit} position={props.position}>{ props.publicService }</PublicServiceAccomplishment>
+                            </div>
+                            <div className="tab-pane fade" id="publication" role="tabpanel" aria-labelledby="publication-tab">
+                                <Publication faculty = { props.faculty } name = { props.name } token = { props.token.user } unit = {props.unit} position={props.position} facultyId={props.pathFacultyId} role={props.data.role} >{ props.publications }</Publication></div>
+                            <div className="tab-pane fade" id="training-seminar" role="tabpanel" aria-labelledby="training-seminar-tab">
+                                <TrainingSeminar name = { props.name } token = { props.token.user } unit = {props.unit} position={props.position}>{ props.trainingSeminar }</TrainingSeminar>
+                            </div>
+                            <div className="tab-pane fade" id="licensure-exam" role="tabpanel" aria-labelledby="licensure-exam-tab">
+                                <LicensureExam name = { props.name } token = { props.token.user } unit = {props.unit} position={props.position}>{ props.licensureExam }</LicensureExam>
+                            </div>
+                            <div className="tab-pane fade" id="research-grant" role="tabpanel" aria-labelledby="research-grant-tab">
+                                <ResearchGrant faculty = { props.faculty } name = { props.name } token = { props.token.user } unit = {props.unit} position={props.position} facultyId={props.pathFacultyId} role={props.data.role}>{ props.researchGrant }</ResearchGrant>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="tab-pane fade" id="faculty-load" role="tabpanel" aria-labelledby="faculty-load-tab">
+                        <br/><br/>
+                        <FacultyLoader name = { props.name } token = { props.token.user } unit = {props.unit} position={props.position} facultyId={props.pathFacultyId} role={props.data.role} editClass = {false}>{ props.facultyLoad }</FacultyLoader>
+                    </div>
+                    <br/>
+                </div>
             </nav>
-
-    <style jsx>{`
-    		a.nav-item{
-			color:#000;
-		}
-		#nav-tab-main a.nav-item:focus{
-			background-color:#78b6c2;
-		}
-		#nav-tab-main a.nav-item:hover{
-			background-color:#78b6c2;
-		}
-		#nav-tab-main a.nav-item .active{
-			background-color:#78b6c2;
-		}
-		a.nav-item{
-			background-color: #aaa;
-		}
-		#nav-tabContent-main a.nav-item{
-			background-color: #78b6c2;
-		}
-		#nav-tabContent-main a.nav-item .active{
-			background-color: #5486b8;
-		}
-		#nav-tabContent-main a.nav-item:focus{
-			background-color:#5486b8;
-		}
-		#nav-tabContent-main a.nav-item:hover{
-			background-color:#5486b8;
-		}
-		.tab-pane.active
-		{
-			background-color: #fff;
-		}
-        .list-group-item-info{
-            text-indent:5%;
-        }
-	`}</style>
         </Layout>
     )
   }

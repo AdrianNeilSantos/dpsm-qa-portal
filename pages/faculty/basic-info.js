@@ -22,13 +22,19 @@ function BasicInfo(props) {
         <Layout userId={props.data.userId} facultyId={props.data.facultyId} role={props.data.role} name={props.name} approvalList={props.approvalList} roleAssignmentFlag={props.roleAssignmentFlag} >
             <nav>
             <div className="nav nav-tabs nav-fill nav-justified" id="nav-tab" role="tablist">
-                <a className="nav-item nav-link active" id="personal-info-tab" data-toggle="tab" data-target="#personal-info" href="#personal-info" role="tab" aria-controls="personal-info" aria-selected="true">Personal Information</a>
-                <a className="nav-item nav-link" id="educ-tab" data-toggle="tab" data-target="#educ" href="#educ" role="tab" aria-controls="educ" aria-selected="false">
-                    Education &nbsp;
+                <a className="nav-item nav-link active nav-top" id="personal-info-tab" data-bs-toggle="tab" data-bs-target="#personal-info" href="#personal-info" role="tab" aria-controls="personal-info" aria-selected="true">
+                    <span className="material-icons-sharp">contact_page</span>
+                    <h3>Personal Information</h3>
+                </a>
+                <a className="nav-item nav-link nav-top" id="educ-tab" data-bs-toggle="tab" data-bs-target="#educ" href="#educ" role="tab" aria-controls="educ" aria-selected="false">
+                    <span className="material-icons-sharp">school</span>
+                    <h3>Education</h3> &nbsp;
                     {educRejected && <span className="badge badge-danger">!</span>}
                 </a>
-                <a className="nav-item nav-link" id="work-exp-tab" data-toggle="tab" data-target="#work-exp" href="#work-exp" role="tab" aria-controls="work-exp" aria-selected="false">Work Experience</a>
-		     {/*<a className="nav-item nav-link" id="teaching-philosophy-tab" data-toggle="tab" href="#teaching-philosophy" role="tab" aria-controls="teaching-philosophy" aria-selected="false">Teaching Philosophy</a>*/}     
+                <a className="nav-item nav-link nav-top" id="work-exp-tab" data-bs-toggle="tab" data-bs-target="#work-exp" href="#work-exp" role="tab" aria-controls="work-exp" aria-selected="false">
+                    <span className="material-icons-sharp">work_history</span>
+                    <h3>Work Experience</h3>
+                </a>
             </div>
             </nav>
 		<br />
@@ -44,26 +50,6 @@ function BasicInfo(props) {
                 <WorkExperience name={props.name} token={props.token.user} unit={props.unit} position={props.position} employment={props.employment} role={props.data.role} editable={true}>{props.workExperience}</WorkExperience>
             </div>
             </div>
-	<style jsx>{`
-		a.nav-item{
-			color:#000;
-		}
-		a.nav-item:focus{
-			background-color:#78b6c2;
-		}
-		a.nav-item:hover{
-			background-color:#78b6c2;
-		}
-		a.active{
-			background-color:#78b6c2;
-		}
-		a#personal-info-tab.active{
-			background-color:#78b6c2;
-		}
-		nav{
-			background-color:#aaa;
-		}
-	`}</style>
         </Layout>
     )
   }

@@ -9,12 +9,17 @@ function GenerateReports(props) {
 
     return (
 		<div>
-        <Layout>
-			<br />
-				<h3 align = "center"> Generate Reports </h3>
-			<p align = "center"> Select one or more categories to generate an Excel spreadsheet containing all faculty information pertaining to those categories </p>
-			<br />
-			<div className = "jumbotron">
+        <Layout userId={props.data.userId} facultyId={props.data.facultyId} role={props.data.role} name={props.data.name} approvalList={props.approvalList} roleAssignmentFlag={props.roleAssignmentFlag}>
+			<br></br>
+			<div className="header">
+				<h1 className="center">Generate Reports</h1>
+			</div>
+
+			<div className="subheader">
+				<p className="center">Select one or more categories to generate an Excel spreadsheet containing all faculty information pertaining to the selected categories.</p>
+			</div>
+
+			<div className = "card">
 				<Formik
 					initialValues={{reports: []}}
 					onSubmit={async (values) => {
@@ -38,44 +43,44 @@ function GenerateReports(props) {
 					}}
 				>
 					{({ values, errors, touched, isSubmitting }) => (
-					<Form action="">
+					<Form action="" className="form-box">
 						<div className="alert alert-danger" role="alert" id="alert">
 							{errorMessage}
 						</div>
 						<div role="group" aria-labelledby="checkbox-group">
 							<div className = "form-check">
-								<Field type="checkbox" name="reports" value="publicService" />
-								<label class="form-check-label" for="publicService">
+								<Field className="form-check-input" type="checkbox" name="reports" value="publicService" />
+								<label className="form-check-label" htmlFor="publicService">
 										&nbsp;Public Service Accomplishments
 								</label>
 							</div>
 							<div className = "form-check">
-								<Field type="checkbox" name="reports" value="publication" />
-								<label class="form-check-label" for="publication">
+								<Field className="form-check-input" type="checkbox" name="reports" value="publication" />
+								<label className="form-check-label" htmlFor="publication">
 										&nbsp;Publications
 								</label>
 							</div>
 							<div className = "form-check">
-								<Field type="checkbox" name="reports" value="trainingSeminar" />
-								<label class="form-check-label" for="trainingSeminar">
+								<Field className="form-check-input" type="checkbox" name="reports" value="trainingSeminar" />
+								<label className="form-check-label" htmlFor="trainingSeminar">
 										&nbsp;Training/Seminars
 								</label>
 							</div>
 							<div className = "form-check">
-								<Field type="checkbox" name="reports" value="researchGrant" />
-								<label class="form-check-label" for="researchGrant">
+								<Field className="form-check-input" type="checkbox" name="reports" value="researchGrant" />
+								<label className="form-check-label" htmlFor="researchGrant">
 										&nbsp;Research Grants
 								</label>
 							</div>
 							<div className = "form-check">
-								<Field type="checkbox" name="reports" value="licensureExam" />
-								<label class="form-check-label" for="licensureExam">
+								<Field className="form-check-input" type="checkbox" name="reports" value="licensureExam" />
+								<label className="form-check-label" htmlFor="licensureExam">
 										&nbsp;Licensure Exams
 								</label>
 							</div>
 							<div className = "form-check">
-								<Field type="checkbox" name="reports" value="education" />
-								<label class="form-check-label" for="education">
+								<Field className="form-check-input" type="checkbox" name="reports" value="education" />
+								<label className="form-check-label" htmlFor="education">
 										&nbsp;Education
 								</label>
 							</div>
@@ -83,13 +88,12 @@ function GenerateReports(props) {
 							
 						<br />
 
-						<button
-						type = "submit"
-						className = "btn btn-primary"
-						disabled = {isSubmitting}
-						>
-						Generate Report
-						</button>
+						<div className="center">
+							<button type = "submit" className = "btn customButton blue" disabled = {isSubmitting}>
+								<span className="material-icons-sharp">get_app</span>
+								Get Reports
+							</button>
+						</div>
 						{/*<Link href="/faculty"><input type="submit" className = "btn btn-primary" value="Login"></input></Link>*/}
 					</Form>
 					)}

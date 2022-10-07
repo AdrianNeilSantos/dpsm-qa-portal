@@ -30,31 +30,32 @@ function Education(props) {
                 return (
                     <tr key = {props.children[key].educInfoId}>
                         <td>{props.children[key].degreeCert}</td>
-                        <td>{props.children[key].degreeType}</td>
-                        <td>{props.children[key].majorSpecialization}</td>
-                        <td>{props.children[key].institutionSchool}</td>
-                        <td>{props.children[key].startDate}</td>
-                        <td>{props.children[key].endDate}{!props.children[key].endDate && <div>Present</div>}</td>
-                        <td>
+                        <td className="less-important-mobile">{props.children[key].degreeType}</td>
+                        <td className="less-important-pc">{props.children[key].majorSpecialization}</td>
+                        <td className="less-important-mobile">{props.children[key].institutionSchool}</td>
+                        <td className="less-important-pc">{props.children[key].startDate}</td>
+                        <td className="less-important-tablet">{props.children[key].endDate}{!props.children[key].endDate && <div>Present</div>}</td>
+                        <td className="less-important-tablet">
                             {
                                 props.children[key].proof &&
-                                <div className = "btn-grp">
+                                <div className = "center">
                                     <button
                                         type="button"
-                                        className="btn btn-primary"
+                                        className="btn customButton-icon-only blue"
                                         onClick = {() => {
                                             let file = props.children[key].proof
                                             downloadProof(file, props.token)
                                         }}
                                     >
-                                        Download
+                                        <span className="material-icons-sharp">file_download</span>
                                     </button>
                                     <a
-                                        className ="btn btn-info"
+                                        className ="btn customButton-icon-only blue"
                                         href={process.env.UPLOADS_URL + props.children[key].proof}
                                         style = {{ color: 'white' }}
                                         target="_blank">
-                                        Preview
+
+                                        <span className="material-icons-sharp">visibility</span>
                                     </a>
                                 </div>
                             }
@@ -63,30 +64,44 @@ function Education(props) {
                                 <div>None</div>
                             }
                         </td>
-                        <td>{props.children[key].status}</td>
-                        <td>{props.children[key].approverRemarks || 'None'}</td>
+                        <td className="less-important-mobile">{props.children[key].status}</td>
+                        <td className="less-important-tablet">{props.children[key].approverRemarks || 'None'}</td>
                         { props.editable &&
                             <td>
                                 <div className = "btn-grp">
-                                    <a className="btn btn-info" data-toggle="modal" data-target="#editEducation" onClick={() => {
+                                    <button type="submit" className="btn customButton-icon-only blue" data-bs-toggle="modal" data-bs-target="#seeDetailsEducation" onClick={() => {
                                         setEdit(props.children[key].educInfoId)
                                         setKey(editEduc)
-                                    }}>Edit</a>
-                                    <a className="btn btn-danger" data-toggle="modal" data-target="#deleteEducation" onClick={() => {
+                                    }}>
+                                        <span className="material-icons-sharp">visibility</span>
+                                    </button>
+                                    <button className="btn customButton-icon-only yellow" data-bs-toggle="modal" data-bs-target="#editEducation" onClick={() => {
+                                        setEdit(props.children[key].educInfoId)
+                                        setKey(editEduc)
+                                    }}>
+                                        <span className="material-icons-sharp">edit</span>
+                                    </button>
+                                    <button className="btn customButton-icon-only delete" data-bs-toggle="modal" data-bs-target="#deleteEducation" onClick={() => {
                                         setDelete(props.children[key].educInfoId)
-                                    }}>Delete</a>
+                                    }}>
+                                        <span className="material-icons-sharp">delete</span>
+                                    </button>
                                 </div>
                             </td>
                         }
                         { props.approver && 
                             <td>
-                                <div className = "btn-grp">
-                                    <a className="btn btn-info" data-toggle="modal" data-target="#approveEducation" onClick={() => {
+                                <div className = "center">
+                                    <button className="btn customButton-icon-only green" data-bs-toggle="modal" data-bs-target="#approveEducation" onClick={() => {
                                         setApprove(props.children[key].educInfoId)
-                                    }}>Approve</a>
-                                    <a className="btn btn-danger" data-toggle="modal" data-target="#rejectEducation" onClick={() => {
+                                    }}>
+                                        <span className="material-icons-sharp">check</span>
+                                    </button>
+                                    <button className="btn customButton-icon-only maroon" data-bs-toggle="modal" data-bs-target="#rejectEducation" onClick={() => {
                                         setApprove(props.children[key].educInfoId)
-                                    }}>Reject</a>
+                                    }}>
+                                        <span className="material-icons-sharp">close</span>
+                                    </button>
                                 </div>
                             </td>
                         }
@@ -95,7 +110,7 @@ function Education(props) {
         });
     }
     else{
-        content = <td colSpan = "9"><p align = "center">No data available!</p></td>
+        content = <td colSpan = "10"><br/><p align = "center">No data available.</p></td>
     }
     let res
 
@@ -129,43 +144,114 @@ function Education(props) {
     // let message
     return (
         <div>
-            <h2 align = "center"> Educational History </h2>
-            <NameDisplay unit = {props.unit} position={props.position}>{props.name}</NameDisplay>
+            <div className="center">
+                <h2 align = "center" style={{display: "inline-block", verticalAlign: "bottom"}}> Educational History </h2>
+                {/* Add Button Trigger */}
+                { props.editable && 
+                <button type="button" className="btn customButton-icon-only maroon" data-bs-toggle="collapse" data-bs-target="#addEducation" aria-expanded="false" aria-controls="addEducation" style={{left: "1rem", position: "relative"}}>
+                    <span className="material-icons-sharp">add</span>
+                </button>
+                }
+            </div>
 
+            <br/>
+
+            <NameDisplay unit = {props.unit} position={props.position}>{props.name}</NameDisplay>
             <div className ="alert alert-success" role="alert" id="educalert" style={{visibility:"hidden"}}></div>
+
             
-            <div className = "table-responsive">
-                <table className = "table table-striped table-sm">
-                    <tbody>
+
+            { props.editable && 
+                <div>
+                    <div className="card collapse" id="addEducation">
+                        <EducationForm token = { props.token }/>
+                    </div>
+                </div>   
+            }
+
+
+
+
+
+            <div className = "table-container">
+                <table className="table table-hover">
+                    <thead>
                         <tr>
-                            <th>Degree/Certification</th>
-                            <th>Degree Type</th>
-                            <th>Major/Specialization</th>
-                            <th>Institution/School</th>
-                            <th>Start Date</th>
-                            <th>End Date</th>
-                            <th>Proof</th>
-                            <th>Status</th>
-                            <th>Approver Remarks</th>
+                            <th>Degree</th>
+                            <th className="less-important-mobile">Type</th>
+                            <th className="less-important-pc">Major</th>
+                            <th className="less-important-mobile">Institution</th>
+                            <th className="less-important-pc">Start Date</th>
+                            <th className="less-important-tablet">End Date</th>
+                            <th className="less-important-tablet    ">Proof</th>
+                            <th className="less-important-mobile">Status</th>
+                            <th className="less-important-tablet">Remarks</th>
                             { (props.editable || props.approver) && <th>Action</th>}
                         </tr>
+                    </thead>
+                    <tbody>
                         {content}
                     </tbody>
                 </table>
             </div>
             
-            { props.editable && 
-                <div>
-                    <EducationForm token = { props.token }/>
-                </div>   
-            }
+            <br/><br/>
+            
 
+            {/* <!-- See More Modal --> */}
+            <div className="modal fade" id="seeDetailsEducation" tabIndex="-1" role="dialog" aria-labelledby="seeDetailsEducationLabel" aria-hidden="true">
+                <div className="modal-dialog" role="document">
+                    <div className="modal-content">
+                    <div className="modal-header">
+                        <h5 className="modal-title" id="seeDetailsEducationLabel">View Education Information</h5>
+                        <button type="button" className="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="modal-details">
+                            <h3>School/Institution: </h3>
+                            <h4>{currData.institutionSchool}</h4>
+                            <br></br>
+                            <h3>Degree Type: </h3>
+                            <h4>{currData.degreeType}</h4>
+                            <br></br>
+                            <h3>Degree Certification: </h3>
+                            <h4>{currData.degreeCert}</h4>
+                            <br></br>
+                            <h3>Major/Specialization: </h3>
+                            <h4>{currData.majorSpecialization}</h4>
+                            <br></br>
+                            <h3>Start Date: </h3>
+                            <h4>{currData.startDate}</h4>
+                            <br></br>
+                            <h3>End Date: </h3>
+                            <h4>{currData.endDate}</h4>
+                            <br></br>
+                            <h3>Status: </h3>
+                            <h4>{currData.status}</h4>
+                            <br></br>
+                            <h3>Approver Remarks: </h3>
+                            <h4>{currData.approverRemarks}</h4>
+                            <br></br>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            {/* Edit Modal */}
             <div className="modal fade" id="editEducation" tabIndex="-1" role="dialog" aria-labelledby="editEducationLabel" aria-hidden="true">
                 <div className="modal-dialog" role="document">
                     <div className="modal-content">
                     <div className="modal-header">
                         <h5 className="modal-title" id="editEducationLabel">Update Education Information</h5>
-                        <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" className="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
@@ -198,13 +284,13 @@ function Education(props) {
                     {({ values, errors, touched, isSubmitting }) => (
                         <Form id = "editEducForm">
                             <div className="modal-body">
-                                <div className = "form-row">
+                                <div className = "row pb-3">
                                     <div className = "form-group">
                                         <label htmlFor = "SchoolEducationHistoryUpdate"> School/Institution </label>
                                         <Field className = "form-control" type = "text" name = "institutionSchool" id ="institutionSchool" placeholder = "Input school" required />
                                     </div>
                                 </div>
-                                <div className = "form-row">
+                                <div className = "row pb-3">
                                     <div className = "form-group">
                                         <label htmlFor = "DegreeEducationalHistoryUpdate"> Degree Type </label>
                                         <Field as = "select" className = "form-control" name = "degreeType" id = "degreeType" >
@@ -221,31 +307,31 @@ function Education(props) {
                                         </Field>
                                     </div>
                                 </div>
-                                <div className = "form-row">
+                                <div className = "row pb-3">
                                     <div className = "form-group">
                                         <label htmlFor = "DegreeEducationalHistoryUpdate"> Degree/Certification </label>
                                         <Field className = "form-control" type = "text" name = "degreeCert" id = "degreeCert" placeholder = "Input degree" />
                                     </div>
                                 </div>
-                                <div className = "form-row">
+                                <div className = "row pb-3">
                                     <div className = "form-group">
                                         <label htmlFor = "MajorEducationalHistoryUpdate"> Major/Specialization </label>
                                         <Field className = "form-control" type = "text" name = "majorSpecialization" id = "majorSpecialization" placeholder = "Input major" />
                                     </div>
                                 </div>
-                                <div className = "form-row">
+                                <div className = "row pb-3">
                                     <div className = "form-group">
                                         <label htmlFor = "StartDateEducationalHistoryUpdate"> Start Date </label>
                                         <Field className = "form-control" type = "date" name = "startDate" id = "startDate" required />
                                     </div>
                                 </div>
-                                <div className = "form-row">
+                                <div className = "row pb-3">
                                     <div className = "form-group">
                                         <label htmlFor = "EndDateEducationalHistoryUpdate"> End Date </label>
                                         <Field className = "form-control" type = "date" name = "endDate" id = "endDate" />
                                     </div>
                                 </div>
-                                <div className = "form-row">
+                                <div className = "row pb-3">
                                     <div className = "form-group">
                                         <label htmlFor = "proof" > Add/Edit Proof [Uploaded: {currData.proof}] </label>
                                         <Field type = "file" className = "form-control-file" name = "proof" id = "proof" value={undefined} />
@@ -253,7 +339,7 @@ function Education(props) {
                                 </div>
                             </div>
                             <div className="modal-footer">
-                                <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                 <button type="submit" className="btn btn-primary" disabled = {isSubmitting} onClick = {() => {
                                     $('#editEducation').modal('toggle');
                                 }}>Save changes</button>
@@ -264,22 +350,23 @@ function Education(props) {
                     </div>
                 </div>
             </div>
-        
+
+
+            {/* Delete Modal */}
             <div className="modal fade" id="deleteEducation" tabIndex="-1" role="dialog" aria-labelledby="deleteEducationLabel" aria-hidden="true">
                 <div className="modal-dialog" role="document">
                     <div className="modal-content">
                     <div className="modal-header">
                         <h5 className="modal-title" id="deleteEducationLabel">Delete Education Information</h5>
-                        <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" className="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div className="modal-body">
-                        <hr />
                         <p> Are you sure you want to delete this education information? </p>
                     </div>
                     <div className="modal-footer">
-                        <button type="button" className="btn btn-secondary" data-dismiss="modal">No, don't delete</button>
+                        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">No, don't delete</button>
                         <button type="button" className="btn btn-danger" onClick = {async () => {
                             let alert = document.getElementById("educalert")
                             $('#deleteEducation').modal('toggle');
@@ -310,16 +397,15 @@ function Education(props) {
                     <div className="modal-content">
                     <div className="modal-header">
                         <h5 className="modal-title" id="approveEducationLabel">Approve Education Information</h5>
-                        <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" className="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div className="modal-body">
-                        <hr />
                         <p> Are you sure you want to approve this education information? </p>
                     </div>
                     <div className="modal-footer">
-                        <button type="button" className="btn btn-secondary" data-dismiss="modal">No, don't approve</button>
+                        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">No, don't approve</button>
                         <button type="button" className="btn btn-danger" onClick = {async () => {
                             let alert = document.getElementById("educalert")
                             $('#approveEducation').modal('toggle');
@@ -354,7 +440,7 @@ function Education(props) {
                     <div className="modal-content">
                     <div className="modal-header">
                         <h5 className="modal-title" id="rejectEducationLabel">Reject Education Information</h5>
-                        <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" className="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
@@ -390,8 +476,7 @@ function Education(props) {
                     {({ values, errors, touched, isSubmitting }) => (
                         <Form id = "rejectEducForm">
                             <div className="modal-body">
-                                <hr />
-                                <div className = "form-row">
+                                <div className = "row pb-3">
                                     <div className = "form-group">
                                         <label htmlFor = "RejectionRemarks"> Reason/Remarks for Rejection </label>
                                         <Field className = "form-control" type = "text" name = "approverRemarks" placeholder = "Input remarks" required />
@@ -399,10 +484,12 @@ function Education(props) {
                                 </div>
                             </div>
                             <div className="modal-footer">
-                                <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                 <button type="submit" className="btn btn-primary" disabled = {isSubmitting} onClick = {() => {
                                     $('#rejectEducation').modal('toggle');
-                                }}>Save changes</button>
+                                }}>
+                                    Save changes
+                                </button>
                             </div>
                         </Form>
                     )}
@@ -410,7 +497,7 @@ function Education(props) {
                     </div>
                 </div>
             </div>
-        
+            <br/><br/>
         </div>
     )
 }

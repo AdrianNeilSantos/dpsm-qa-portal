@@ -22,19 +22,23 @@ function EmploymentHistory(props){
 					<td>{props.children.faculty_employment_infos[key].faculty_employment_position.position}</td>
                     <td>{props.children.faculty_employment_infos[key].status}</td>
                     <td>{props.children.faculty_employment_infos[key].category}</td>
-					<td>{props.children.faculty_employment_infos[key].startDate}</td>
-					<td>{props.children.faculty_employment_infos[key].endDate || 'Present'}</td>
+					<td className="less-important-mobile">{props.children.faculty_employment_infos[key].startDate}</td>
+					<td className="less-important-mobile">{props.children.faculty_employment_infos[key].endDate || 'Present'}</td>
 					{
 						props.role == 5 && 
 						<td>
 							<div className = "btn-grp">
-								<a className="btn btn-info" data-toggle="modal" data-target="#editEmployment" onClick={() => {
+								<button className="btn customButton-icon-only yellow" data-bs-toggle="modal" data-bs-target="#editEmployment" onClick={() => {
 									empInfoId = props.children.faculty_employment_infos[key].employmentInfoId
 									setKey(props.children.faculty_employment_infos[key].employmentInfoId)
-								}}>Edit</a>
-								<a className="btn btn-danger" data-toggle="modal" data-target="#deleteEmployment" onClick={() => {
+								}}>
+                                    <span className="material-icons-sharp">edit</span>
+                                </button>
+								<button className="btn customButton-icon-only delete" data-bs-toggle="modal" data-bs-target="#deleteEmployment" onClick={() => {
 									empInfoId = props.children.faculty_employment_infos[key].employmentInfoId
-								}}>Delete</a>
+								}}>
+                                    <span className="material-icons-sharp">delete</span>
+                                </button>
 							</div>
 						</td> 
 					}
@@ -42,7 +46,7 @@ function EmploymentHistory(props){
 			);
 		});
 	} else {
-        content = <td colSpan = "5"><p align = "center">No data available!</p></td>
+        content = <td colSpan = "6"><br/><p align = "center">No data available.</p></td>
     }
 
 	function setKey(x) {
@@ -62,21 +66,25 @@ function EmploymentHistory(props){
 
 	return(
 		<div>
+            <br/>
 			<div className ="alert alert-success" role="alert" id="employmentalert" style={{visibility:"hidden"}}></div>
-			<div className = "table-responsive">
-			<table className = "table table-striped table-sm">
-				<tbody>
-					<tr>
-						<th>Position</th>
-						<th>Status</th>
-                        <th>Category</th>
-						<th>Start Date</th>
-						<th>End Date</th>
-						{ props.role == 5 && <th>Action</th> }
-					</tr>
-					{content}
-				</tbody>
-			</table>
+            <div className = "table-container">
+                <h3 className="table-container-text" align = "center"> Within UP Manila </h3>
+                <table className="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Positions</th>
+                            <th>Status</th>
+                            <th>Category</th>
+                            <th className="less-important-mobile">Start Date</th>
+                            <th className="less-important-mobile">End Date</th>
+                            { props.role == 5 && <th>Action</th> }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {content}
+                    </tbody>
+                </table>
 			</div>
 
 			<div className="modal fade" id="editEmployment" tabIndex="-1" role="dialog" aria-labelledby="editEmploymentLabel" aria-hidden="true">
@@ -84,20 +92,19 @@ function EmploymentHistory(props){
                     <div className="modal-content">
                     <div className="modal-header">
                         <h5 className="modal-title" id="editEmploymentLabel">Update Employment Information</h5>
-                        <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" className="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div className="modal-body">
                         <form>
-                            <hr />
-                            <div className = "form-row">
+                            <div className = "row pb-3">
 								<div className = "form-group">
 									<label htmlFor = "startDate"> Start Date </label>
 									<input type = "date" className = "form-control" name = "startDate" defaultValue = { currData.startDate } onChange = {(e) => handleInputChange("startDate", e)} />
 								</div>
                             </div>
-                            <div className = "form-row">
+                            <div className = "row pb-3">
 								<div className = "form-group">
 									<label htmlFor = "endDate"> End Date </label>
 									<input type = "date" className = "form-control" name = "endDate" defaultValue = { currData.endDate } onChange = {(e) => handleInputChange("endDate", e)} />
@@ -106,7 +113,7 @@ function EmploymentHistory(props){
                         </form>
                     </div>
                     <div className="modal-footer">
-                        <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         <button type="button" className="btn btn-primary" onClick = {async () => {
                             $('#editEmployment').modal('toggle');
                             let alert = document.getElementById("employmentalert")
@@ -126,7 +133,7 @@ function EmploymentHistory(props){
 
                             Router.push('/admin/' + props.facultyId)
                         }}>Save changes</button>
-                    </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -136,16 +143,15 @@ function EmploymentHistory(props){
                     <div className="modal-content">
                     <div className="modal-header">
                         <h5 className="modal-title" id="deleteEmploymentLabel">Delete Employment Information</h5>
-                        <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" className="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div className="modal-body">
-                        <hr />
                         <p> Are you sure you want to delete this employment information? </p>
                     </div>
                     <div className="modal-footer">
-                        <button type="button" className="btn btn-secondary" data-dismiss="modal">No, don't delete</button>
+                        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">No, don't delete</button>
                         <button type="button" className="btn btn-danger" onClick = {async () => {
                             let alert = document.getElementById("employmentalert")
                             $('#deleteEmployment').modal('toggle');
@@ -167,10 +173,10 @@ function EmploymentHistory(props){
                             Router.push('/admin/' + props.facultyId, '/admin/' + props.facultyId)
                         }}>Yes, delete</button>
                     </div>
-                    </div>
                 </div>
             </div>
-		</div>
+        </div>
+	</div>
 	)
 }
 

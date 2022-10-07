@@ -48,39 +48,46 @@ class LicensureExamForm extends React.Component{
             >
                 {({ values, errors, touched, isSubmitting }) => (
                     <Form id = "licenseForm">
+                        <h2 className="center">Add Licensure Exam Form</h2>
                         <hr />
-                        <br />
-			<h6>Required</h6>
-                        <div className = "form-row">
-                            <div className = "form-group col-md-2">
-                                <label htmlFor = "LicensureExam[]" className = "required-label"> Licensure Exam </label>
+			            <h6>Required</h6>
+                        <div className = "row pb-3">
+                            <div className = "form-group col-md-6">
+                                <label htmlFor = "LicensureExam[]" className = "required-label" style={{fontSize:"16px"}}> Licensure Exam </label>
                                 <Field className = "form-control" type = "text" name = "examName" placeholder = "Input licensure exam" required />
                             </div>
-                            <div className = "form-group col-md-2">
-                                <label htmlFor = "LicensureExamDate[]" className = "required-label"> Date </label>
-                                <Field type = "date" className = "form-control" name = "examDate" required />
-                            </div>
-                            <div className = "form-group col-md-2">
-                                <label htmlFor = "LicensureExamRank[]"> Rank </label>
-                                <Field className = "form-control" type = "text" name = "rank" placeholder = "Input rank" />
-                            </div>
-                            <div className = "form-group col-md-2">
-                                <label htmlFor = "LicenseNumber[]" className = "required-label"> License Number </label>
+                            <div className = "form-group col-md-6">
+                                <label htmlFor = "LicenseNumber[]" className = "required-label" style={{fontSize:"16px"}}> License Number </label>
                                 <Field className = "form-control" type = "text" name = "licenseNumber" placeholder = "Input licensure number" required />
                             </div>
-                            <div className = "form-group col-md-2">
-                                <label htmlFor = "LicensureExamProof[]"> Proof </label>
+                        </div>
+                        <div className="row pb-3">
+                            <div className = "form-group col-md-4">
+                                <label htmlFor = "LicensureExamDate[]" className = "required-label" style={{fontSize:"16px"}}> Date </label>
+                                <Field type = "date" className = "form-control" name = "examDate" required />
+                            </div>
+                            <div className = "form-group col-md-4">
+                                <label htmlFor = "LicensureExamRank[]" style={{fontSize:"16px"}}> Rank </label>
+                                <Field className = "form-control" type = "text" name = "rank" placeholder = "Input rank" />
+                            </div>
+
+                            <div className = "form-group col-md-4">
+                                <label htmlFor = "LicensureExamProof[]" style={{fontSize:"16px"}}> Proof </label> <br/>
                                 <Field type = "file" className = "form-control-file" name = "proof" />
                             </div>
                         </div>
                         <br />
-                        <button
-                            type = "submit"
-                            className = "btn btn-primary col-md-12"
-                            disabled = {isSubmitting}
-                        >
-                            Submit
-                        </button>
+                        <div className="center">
+                            <button
+                                type = "submit"
+                                className = "btn customButton maroon"
+                                disabled = {isSubmitting}
+                            >
+                                <span className="material-icons-sharp">add</span>
+                                Submit
+                            </button>
+                        </div>
+                        
 			<style jsx>{`
 		label.required-label:after{
 			content: "*";

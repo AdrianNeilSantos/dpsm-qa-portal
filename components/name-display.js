@@ -2,9 +2,8 @@ function NameDisplay(props){
 	if(props.children != null) {
 		return(
 			<div>
-				<h3 align = "center"> <u>{props.children}</u> </h3>
-				<h5 align = "center"> {props.position}, {props.unit} </h5>
-				<br />
+				<h3 className="display-name" align = "center"> <u>{props.children}</u> </h3>
+				<h3 className="display-position" align = "center"> {props.position}, {props.unit} </h3>
 			</div>
 		)
 	} else {

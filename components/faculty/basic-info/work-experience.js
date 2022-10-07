@@ -29,21 +29,31 @@ function WorkExperience(props){
             if(props.children[key].workExpId != null) {
                 return (
                     <tr key = {props.children[key].workExpId}>
-                        <td>{props.children[key].employerName}</td>
+                        <td className="less-important-mobile">{props.children[key].employerName}</td>
                         <td>{props.children[key].position}</td>
-                        <td>{props.children[key].startDate}</td>
-                        <td>{props.children[key].endDate}{!props.children[key].endDate && <div>Present</div>}</td>
-                        <td>{props.children[key].description}</td>
+                        <td className="less-important-mobile">{props.children[key].startDate}</td>
+                        <td className="less-important-mobile">{props.children[key].endDate}{!props.children[key].endDate && <div>Present</div>}</td>
+                        <td className="less-important-pc">{props.children[key].description}</td>
                         { props.editable &&
                             <td>
                                 <div className = "btn-grp">
-                                    <a className="btn btn-info" data-toggle="modal" data-target="#editWorkExperience" onClick={() => {
+                                    <button type="submit" className="btn customButton-icon-only blue" data-bs-toggle="modal" data-bs-target="#seeDetailsWork" onClick={() => {
                                         setEdit(props.children[key].workExpId)
                                         setKey(editWork)
-                                    }}>Edit</a>
-                                    <a className="btn btn-danger" data-toggle="modal" data-target="#deleteWorkExperience" onClick={() => {
+                                    }}>
+                                        <span className="material-icons-sharp">visibility</span>
+                                    </button>
+                                    <button className="btn customButton-icon-only yellow" data-bs-toggle="modal"  data-bs-target="#editWorkExperience" onClick={() => {
+                                        setEdit(props.children[key].workExpId)
+                                        setKey(editWork)
+                                    }}>
+                                        <span class="material-icons-sharp">edit</span>
+                                    </button>
+                                    <button className="btn customButton-icon-only delete" data-bs-toggle="modal"  data-bs-target="#deleteWorkExperience" onClick={() => {
                                         setDelete(props.children[key].workExpId)
-                                    }}>Delete</a>
+                                    }}>
+                                        <span class="material-icons-sharp">delete</span>
+                                    </button>
                                 </div>
                             </td>
                         }
@@ -53,7 +63,7 @@ function WorkExperience(props){
         });
     }
     else{
-        content = <td colSpan = "6"><p align = "center">No data available!</p></td>
+        content = <td colSpan = "6"><br/><p align = "center">No data available.</p></td>
     }
 
     function setEdit(id) {
@@ -81,88 +91,151 @@ function WorkExperience(props){
 
     return(
         <div>
-            <h2 align = "center"> Work Experience </h2>
-            <NameDisplay unit = {props.unit} position={props.position}>{name}</NameDisplay>
-            <div role="alert" id="workexpalert" style={{visibility:"hidden"}}></div>
-            <h5 align = "center"> Within UP Manila </h5>
-            <EmploymentHistory role={props.role} token={props.token} facultyId={props.facultyId}>{props.employment}</EmploymentHistory>
-            <br />
-            <h5 align = "center"> Outside UP Manila </h5>
-            <div className = "table-responsive">
-                <table className = "table table-striped table-sm">
-                    <tbody>
-                        <tr key = "headers">
-                            <th>Employer</th>
-                            <th>Position</th>
-                            <th>Start Date</th>
-                            <th>End Date</th>
-                            <th>Description</th>
-                            <th>Action</th>
-                    </tr>
-                    {content}
-                   </tbody>
-                </table>
+            <div className="center">
+                <h2 align = "center" style={{display: "inline-block", verticalAlign: "bottom"}}> Work Experience </h2>
+                {/* Add Button Trigger */}
+                { props.editable && 
+                <button type="button" className="btn customButton-icon-only maroon" data-bs-toggle="collapse" data-bs-target="#addEmploymentHistory" aria-expanded="false" aria-controls="addEmploymentHistory" style={{left: "1rem", position: "relative"}}>
+                    <span className="material-icons-sharp">add</span>
+                </button>
+                }
+
+                { props.role == 5 &&
+                <button type="button" className="btn customButton-icon-only maroon" data-bs-toggle="collapse" data-bs-target="#addEmploymentForm" aria-expanded="false" aria-controls="addEmploymentForm" style={{left: "1rem", position: "relative"}}>
+                    <span className="material-icons-sharp">add</span>
+                </button>
+                }
             </div>
+            <br/>
+
+            <NameDisplay unit = {props.unit} position={props.position}>{name}</NameDisplay>
+            
+            <br/>
             { props.editable &&
-                <div>
+                <div className="card collapse" id="addEmploymentHistory">
                     <WorkExpForm token = { props.token }/>
                 </div>
             }
+            
             { props.role == 5 &&
-                <div>
-                    <hr />
-                    <h3 align ="center"> Add Faculty Employment </h3>
+                <div className="card collapse" id="addEmploymentForm">
                     <EmploymentForm token={props.token} facultyId={props.facultyId} positionsList={props.positionsList}/>
-
                 </div>
             }
+            
+
+            <EmploymentHistory role={props.role} token={props.token} facultyId={props.facultyId}>{props.employment}</EmploymentHistory>
+            <br/>
+            <div className ="alert alert-success" role="alert" id="workexpalert" style={{visibility:"hidden"}}></div>
+            <div className = "table-container">
+                <h3 className="table-container-text"align = "center"> Outside UP Manila </h3>
+                <table className="table table-hover">
+                    <thead>
+                        <tr key = "headers">
+                            <th className="less-important-mobile">Employer</th>
+                            <th>Position</th>
+                            <th className="less-important-mobile">Start Date</th>
+                            <th className="less-important-mobile">End Date</th>
+                            <th className="less-important-pc">Description</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    
+                    <tbody>
+                        {content}
+                    </tbody>
+                </table>
+            </div>
+            <br/><br/>
+
+            {/* <!-- See More Modal --> */}
+            <div className="modal fade" id="seeDetailsWork" tabIndex="-1" role="dialog" aria-hidden="true">
+                <div className="modal-dialog" role="document">
+                    <div className="modal-content">
+                    <div className="modal-header">
+                        <h5 className="modal-title">View Education Information</h5>
+                        <button type="button" className="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="modal-details">
+                            <h3>Employer: </h3>
+                            <h4>{currData.employerName}</h4>
+                            <br></br>
+                            <h3>Position: </h3>
+                            <h4>{currData.position}</h4>
+                            <br></br>
+                            <h3>Start Date: </h3>
+                            <h4>{currData.startDate}</h4>
+                            <br></br>
+                            <h3>End Date: </h3>
+                            <h4>{currData.endDate}</h4>
+                            <br></br>
+                            <h3>Description: </h3>
+                            <h4>{currData.description}</h4>
+                            <br></br>
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                    </div>
+                </div>
+            </div>
+
 
             <div className="modal fade" id="editWorkExperience" tabIndex="-1" role="dialog" aria-labelledby="editWorkExperienceLabel" aria-hidden="true">
                 <div className="modal-dialog" role="document">
                     <div className="modal-content">
                     <div className="modal-header">
                         <h5 className="modal-title" id="editWorkExperienceLabel">Update Work Experience Information</h5>
-                        <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" className="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div className="modal-body">
                         <form>
-                            <hr />
-                            <div className = "form-row">
-                            <div className = "form-group">
-                    <label htmlFor = "EmployerWorkExperienceUpdate"> Employer </label>
-                    <input className = "form-control" type = "text" name = "EmployerWorkExperienceUpdate" placeholder = "Input name of employer" defaultValue = { currData.employerName } onChange = {(e) => handleInputChange("employerName", e)} />
-                    </div>
-                </div>
-                            <div className = "form-row">
-                            <div className = "form-group">
-                    <label htmlFor = "PositionWorkExperienceUpdate"> Title/Position </label>
-                    <input className = "form-control" type = "text" name = "PositionWorkExperienceUpdate" placeholder = "Input position" defaultValue = { currData.position } onChange = {(e) => handleInputChange("position", e)}/>
-                </div>
+                            <div className = "row pb-3">
+                                <div className = "form-group">
+                                    <label htmlFor = "EmployerWorkExperienceUpdate"> Employer </label>
+                                    <input className = "form-control" type = "text" name = "EmployerWorkExperienceUpdate" placeholder = "Input name of employer" defaultValue = { currData.employerName } onChange = {(e) => handleInputChange("employerName", e)} />
+                                </div>
                             </div>
-                            <div className = "form-row">
-                            <div className = "form-group">
-                    <label htmlFor = "StartDateWorkExperienceUpdate"> Start Date </label>
-                    <input type = "date" className = "form-control" name = "StartDateWorkExperienceUpdate" defaultValue = { currData.startDate } onChange = {(e) => handleInputChange("startDate", e)} />
-                </div>
+
+                            <div className = "row pb-3">
+                                <div className = "form-group">
+                                    <label htmlFor = "PositionWorkExperienceUpdate"> Title/Position </label>
+                                    <input className = "form-control" type = "text" name = "PositionWorkExperienceUpdate" placeholder = "Input position" defaultValue = { currData.position } onChange = {(e) => handleInputChange("position", e)}/>
+                                </div>
                             </div>
-                            <div className = "form-row">
-                            <div className = "form-group">
-                    <label htmlFor = "EndDateWorkExperienceUpdate"> End Date </label>
-                    <input type = "date" className = "form-control" name = "EndDateWorkExperienceUpdate" defaultValue = { currData.endDate } onChange = {(e) => handleInputChange("endDate", e)} />
-                </div>
+
+                            <div className = "row pb-3">
+                                <div className = "form-group">
+                                    <label htmlFor = "StartDateWorkExperienceUpdate"> Start Date </label>
+                                    <input type = "date" className = "form-control" name = "StartDateWorkExperienceUpdate" defaultValue = { currData.startDate } onChange = {(e) => handleInputChange("startDate", e)} />
+                                </div>
                             </div>
-                            <div className = "form-row">
-                            <div className = "form-group">
-                    <label htmlFor = "DescriptionWorkExperienceUpdate"> Description </label>
-                    <input className = "form-control" type = "text" name = "DescriptionWorkExperienceUpdate" placeholder = "Add Description" defaultValue = { currData.description } onChange = {(e) => handleInputChange("description", e)} />
-                </div>
+
+                            <div className = "row pb-3">
+                                <div className = "form-group">
+                                    <label htmlFor = "EndDateWorkExperienceUpdate"> End Date </label>
+                                    <input type = "date" className = "form-control" name = "EndDateWorkExperienceUpdate" defaultValue = { currData.endDate } onChange = {(e) => handleInputChange("endDate", e)} />
+                                </div>
+                            </div>
+
+                            <div className = "row pb-3">
+                                <div className = "form-group">
+                                    <label htmlFor = "DescriptionWorkExperienceUpdate"> Description </label>
+                                    <input className = "form-control" type = "text" name = "DescriptionWorkExperienceUpdate" placeholder = "Add Description" defaultValue = { currData.description } onChange = {(e) => handleInputChange("description", e)} />
+                                </div>
                             </div>
                         </form>
                     </div>
+
                     <div className="modal-footer">
-                        <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         <button type="button" className="btn btn-primary" onClick = {async () => {
                             $('#editWorkExperience').modal('toggle');
                             let alert = document.getElementById("workexpalert")
@@ -192,16 +265,15 @@ function WorkExperience(props){
                     <div className="modal-content">
                     <div className="modal-header">
                         <h5 className="modal-title" id="deleteWorkExperienceLabel">Delete Work Experience Information</h5>
-                        <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" className="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div className="modal-body">
-                        <hr />
                         <p> Are you sure you want to delete this work experience information? </p>
                     </div>
                     <div className="modal-footer">
-                        <button type="button" className="btn btn-secondary" data-dismiss="modal">No, don't delete</button>
+                        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">No, don't delete</button>
                         <button type="button" className="btn btn-danger" onClick = {async () => {
                             $('#deleteWorkExperience').modal('toggle');
                             let alert = document.getElementById("workexpalert")
@@ -225,7 +297,12 @@ function WorkExperience(props){
                     </div>
                 </div>
             </div>
+            <br/><br/>
+
+            
         </div>
+
+        
     )
 }
 

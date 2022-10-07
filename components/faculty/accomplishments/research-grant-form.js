@@ -9,10 +9,6 @@ class ResearchGrantForm extends React.Component{
 
 	constructor(props){
 		super(props)
-		this.state = {
-			startdateProjected: ""
-			startdateActual: ""
-		}
 	}
 	
 	render(){
@@ -57,83 +53,96 @@ class ResearchGrantForm extends React.Component{
 			>
 				{({ values, errors, touched, isSubmitting }) => (
 					<Form id = "resForm">
+						<h2 className="center">Add Research Grant Form</h2>
 						<hr />
-						<br />
 						<h6>Required</h6>
-						<div className = "form-row">
+						{/* 1st Row */}
+						<div className = "row pb-3">
 							<div className = "form-group col-md-12">
-								<label htmlFor = "Research[]" className = "required-label"> Research Project </label>
+								<label htmlFor = "Research[]" className = "required-label" style={{fontSize:"16px"}}> Research Project </label>
 								<Field className = "form-control" type = "text" name = "researchName" placeholder = "Input research name" required />
 							</div>
 						</div>
-						<div className = "form-row">
-							<div className = "form-group col-md-12"> 
-								<label htmlFor = "ResearchSponsor[]" className = "required-label"> Sponsor </label>
+
+						{/* 2nd Row */}
+						<div className = "row pb-3">
+							<div className = "form-group col-md-4"> 
+								<label htmlFor = "ResearchSponsor[]" className = "required-label" style={{fontSize:"16px"}}> Sponsor </label>
 								<Field className = "form-control" type = "text" name = "granter" placeholder = "Input sponsor" required />
 							</div>
-						</div>
-						<div className = "form-row">
-							<div className = "form-group col-md-6"> 
-								<label htmlFor = "ResearchAmount[]" className = "required-label"> Amount </label>
+							<div className = "form-group col-md-4"> 
+								<label htmlFor = "ResearchAmount[]" className = "required-label" style={{fontSize:"16px"}}> Amount </label>
 								<Field className = "form-control" type = "text" name = "amount" placeholder = "Input amount" required />
 							</div>
-							<div className = "form-group col-md-6">
-	                            				<label htmlFor = "ResearchProof[]"> Proof </label>
-	                            				<Field type = "file" className = "form-control-file" name = "proof" id = "proof" />
-	                       				 </div>
+							<div className = "form-group col-md-4">
+	                            <label htmlFor = "ResearchProof[]" style={{fontSize:"16px"}}> Proof </label><br/>
+	                            <Field type = "file" className = "form-control-file" name = "proof" id = "proof" />
+	                       	</div>
 						</div>
-						<div className = "form-row">
+
+						{/* 3rd Row */}
+						<div className="row pb-3">
+							<div className="form-group col-md-8">
+								<ResearchGrantFormAuthor faculty = {this.props.faculty}/>
+							</div>
+							<div className = "form-group col-md-4"> 
+								<label htmlFor = "ResearchProgress[]" className = "required-label" style={{fontSize:"16px"}}> Research Progress </label>
+								<Field as = "select" className = "form-control" style={{height: "2.45rem"}} name = "researchProgress" required>
+	                                <option value = "Ongoing">Ongoing</option>
+	                                <option value = "Completed">Completed</option>
+	                            </Field>
+							</div>
+						</div>
+
+						{/* 4th Row */}
+						<div className = "row pb-3">
 							<div className = "form-group col-md-12">
-								<label htmlFor = "ResearchAuthorNonDPSM[]"> Researchers (non-DPSM) </label>
+								<label htmlFor = "ResearchAuthorNonDPSM[]" style={{fontSize:"16px"}}> Non-DPSM Researchers </label>
 								<Field className = "form-control" type = "text" name = "nonFacultyResearchers" placeholder = "Input all authors outside DPSM (separate names with commas)" />
 							</div>
 						</div>
-						<div>
-							<ResearchGrantFormAuthor faculty = {this.props.faculty} />
-						</div>
-						<div className = "form-row">
-							<div className = "form-group col-md-2">
-								<label htmlFor = "ResearchProjectedStartDate[]" className = "required-label"> Start Date (Projected) </label>
-								<Field type = "date" className = "form-control" onChange={e => this.setState({ startdateProjected: e.target.value })} name = "projectedStart" required />
+
+						{/* 5th Row  */}
+						<div className = "row pb-3">
+							<div className = "form-group col-md-3">
+								<label htmlFor = "ResearchProjectedStartDate[]" className = "required-label" style={{fontSize:"16px"}}> Projected Start </label>
+								<Field type = "date" className = "form-control" name = "projectedStart" required />
 							</div>
-							<div className = "form-group col-md-2">
-								<label htmlFor = "ResearchProjectedEndDate[]" className = "required-label"> End Date (Projected) </label>
-								<Field type = "date" className = "form-control" min={this.state.startdateProjected} name = "projectedEnd" required />
+							<div className = "form-group col-md-3">
+								<label htmlFor = "ResearchProjectedEndDate[]" className = "required-label" style={{fontSize:"16px"}}> Projected End </label>
+								<Field type = "date" className = "form-control" name = "projectedEnd" required />
 							</div>
-							<div className = "form-group col-md-2">
-								<label htmlFor = "ResearchStartDate[]" className = "required-label"> Start Date (Actual) </label>
-								<Field type = "date" className = "form-control" onChange={e => this.setState({ startdateActual: e.target.value })} name = "actualStart" required />
+							<div className = "form-group col-md-3">
+								<label htmlFor = "ResearchStartDate[]" className = "required-label" style={{fontSize:"16px"}}> Actual Start </label>
+								<Field type = "date" className = "form-control" name = "actualStart" required />
 							</div>
-							<div className = "form-group col-md-2">
-								<label htmlFor = "ResearchEndDate[]"> End Date (Actual) </label>
-								<Field type = "date" className = "form-control" min={this.state.startdateActual} name = "actualEnd" />
-							</div>
-							<div className = "form-group col-md-4"> 
-								<label htmlFor = "ResearchProgress[]" className = "required-label"> Research Progress </label>
-								<Field as = "select" className = "form-control" name = "researchProgress" required>
-	                                				<option value = "Ongoing">Ongoing</option>
-	                                				<option value = "Completed">Completed</option>
-	                            				</Field>
+							<div className = "form-group col-md-3">
+								<label htmlFor = "ResearchEndDate[]" style={{fontSize:"16px"}}> Actual End </label>
+								<Field type = "date" className = "form-control" name = "actualEnd" />
 							</div>
 						</div>
-						<br />
-						<button
-							type = "submit"
-							className = "btn btn-primary col-md-12"
-							disabled = {isSubmitting}
-						>
-							Submit
-						</button>
+						<br/>
+						<div className="center">
+							<button
+								type = "submit"
+								className = "btn customButton maroon"
+								disabled = {isSubmitting}
+							>
+								<span className="material-icons-sharp">add</span>
+								Submit
+							</button>
+						</div>
+
 						<style jsx>{`
-		label.required-label:after{
-			content: "*";
-			color: #f00;
-		}
-		h6:before{
-			content: "* ";
-			color: #f00;
-		}
-	`}</style>
+							label.required-label:after{
+								content: "*";
+								color: #f00;
+							}
+							h6:before{
+								content: "* ";
+								color: #f00;
+							}
+						`}</style>
 					</Form>
 				)}
 				

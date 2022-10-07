@@ -7,9 +7,6 @@ import addTraining from '../../../services/faculty/accomplishments/addTraining'
 class TrainingSeminarForm extends React.Component{
 	constructor(props){
 		super(props)
-		this.state = {
-			startdate: ""
-		}
 	}
 	
 	render(){
@@ -49,57 +46,66 @@ class TrainingSeminarForm extends React.Component{
             >
                 {({ values, errors, touched, isSubmitting }) => (
         			<Form id = "tsForm">
+                        <h2 className="center">Add Training/Seminar Form</h2>
                         <hr />
-                        <br />
-			<h6>Required</h6>
-                        <div className = "form-row">
-                            <div className = "form-group col-md-3">
-                                <label htmlFor = "TrainingSeminar[]" className = "required-label"> Name of Training/Seminar </label>
-                                <Field className = "form-control" type = "text" name = "title" id = "title" placeholder = "Input training/seminar" required />
+			            <h6>Required</h6>
+                        {/* 1st Row */}
+                        <div className = "row pb-3">
+                            <div className = "form-group col-md-6">
+                                <label htmlFor = "TrainingSeminar[]" className = "required-label" style={{fontSize:"16px"}} > Name of Training/Seminar </label>
+                                <Field className = "form-control" type = "text" name = "title" id = "title" placeholder = "Input name of Training/Seminar" required />
                             </div>
-                            <div className = "form-group col-md-3">
-                                <label htmlFor = "TrainingSeminarRole[]" className = "required-label"> Role</label>
+                            <div className = "form-group col-md-6">
+                                <label htmlFor = "TrainingSeminarRole[]" className = "required-label" style={{fontSize:"16px"}}> Role</label>
                                 <Field className = "form-control" type = "text" name = "role" id = "role" placeholder = "Input role in training/seminar" required />
                             </div>
-                            <div className = "form-group col-md-2">
-                                <label htmlFor = "TrainingSeminarVenue[]" className = "required-label"> Venue </label>
+                        </div>
+
+                        {/* 2nd Row */}
+                        <div className = "row pb-3">
+                            <div className = "form-group col-md-4">
+                                <label htmlFor = "TrainingSeminarVenue[]" className = "required-label" style={{fontSize:"16px"}}> Venue </label>
                                 <Field className = "form-control" type = "text" name = "venue" id = "venue" placeholder = "Input venue" required />
                             </div>
-                            <div className = "form-group col-md-2">
-                                <label htmlFor = "TrainingSeminarStartDate[]" className = "required-label"> Start Date </label>
-                                <Field type = "date" className = "form-control" onChange={e => this.setState({ startdate: e.target.value })}  name = "dateFrom" id = "dateFrom" required />
+                            <div className = "form-group col-md-4">
+                                <label htmlFor = "TrainingSeminarStartDate[]" className = "required-label" style={{fontSize:"16px"}}> Start Date </label>
+                                <Field type = "date" className = "form-control" name = "dateFrom" id = "dateFrom" required />
                             </div>
-                            <div className = "form-group col-md-2">
-                                <label htmlFor = "TrainingSeminarEndDate[]"> End Date </label>
-                                <Field type = "date" className = "form-control" min={this.state.startdate} name = "dateTo" id = "dateTo" />
+                            <div className = "form-group col-md-4">
+                                <label htmlFor = "TrainingSeminarEndDate[]" style={{fontSize:"16px"}}> End Date </label>
+                                <Field type = "date" className = "form-control" name = "dateTo" id = "dateTo" />
                             </div>
+                        </div>
+
+                        {/* 3rd Row */}
+                        <div className="row pb-3">
                             <div className = "form-group col-md-8">
-                                <label htmlFor = "TrainingSeminarRemarks[]"> Remarks </label>
+                                <label htmlFor = "TrainingSeminarRemarks[]" style={{fontSize:"16px"}}> Remarks </label>
                                 <Field className = "form-control" type = "text" name = "remarks" id = "remarks" placeholder = "Input remarks" />
                             </div>
                             <div className = "form-group col-md-4">
-                                <label htmlFor = "TrainingSeminarProof[]"> Proof </label>
+                                <label htmlFor = "TrainingSeminarProof[]" style={{fontSize:"16px"}}> Proof </label> <br/>
                                 <Field type = "file" className = "form-control-file" name = "proof" id = "proof" />
                             </div>
                         </div>
                         <br />
-                        <button
-                            type = "submit"
-                            className = "btn btn-primary col-md-12"
-                            disabled = {isSubmitting}
-                        >
-                            Submit
-                        </button>
-			<style jsx>{`
-		label.required-label:after{
-			content: "*";
-			color: #f00;
-		}
-		h6:before{
-			content: "* ";
-			color: #f00;
-		}
-	`}</style>
+                        <div className="center">
+                            <button type = "submit" className = "btn customButton maroon" disabled = {isSubmitting}>
+                                <span className="material-icons-sharp">add</span> 
+                                Submit
+                            </button>
+                        </div>
+                        
+                    <style jsx>{`
+                        label.required-label:after{
+                            content: "*";
+                            color: #f00;
+                        }
+                        h6:before{
+                            content: "* ";
+                            color: #f00;
+                        }
+                    `}</style>
                     </Form>
                 )}
 		

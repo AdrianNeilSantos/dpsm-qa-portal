@@ -9,7 +9,7 @@ function FacultyList(props) {
     return (
         <Layout userId={props.data.userId} facultyId={props.data.facultyId} role={props.data.role} name={props.data.name} approvalList={props.approvalList} roleAssignmentFlag={props.roleAssignmentFlag}>
 			<br />
-			<h2 align="center">Faculties with Pending Approval</h2>
+			<h2 align="center">Faculty with Pending Approval</h2>
 			<Faculty path="approval">{props.approvalList.rows}</Faculty>
         </Layout>
     )

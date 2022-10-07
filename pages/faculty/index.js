@@ -16,41 +16,34 @@ function Dashboard(props) {
 
 	                <div className="container">
                         <br />
-                        <Link href = {{ pathname: "/faculty/generate-reports"}}><button className = "btn btn-info">Download All Faculty Information</button></Link>
-                        <br />
+                        <Link href = {{ pathname: "/faculty/generate-reports"}}>
+                            <button className = "btn customButton maroon">
+                                <span className="material-icons-sharp">file_download</span>
+                                Get All Info
+                            </button>
+                        </Link>
+                        <br /> <br></br>
 	                    <nav>
-            			<div className="nav nav-tabs nav-fill nav-justified" id="nav-tab" role="tablist">
-                            <a className="nav-item nav-link" id="accomplishment-count-tab" data-toggle="tab" href="#accomplishment-count" role="tab" aria-controls="accomplishment-count" aria-selected="false">Accomplishment Count</a>
-                            <a className="nav-item nav-link" id="employment-status-tab" data-toggle="tab" href="#employment-status" role="tab" aria-controls="employment-status" aria-selected="false">Employment Status</a>
-                            <a className="nav-item nav-link" id="degree-tab" data-toggle="tab" href="#degree" role="tab" aria-controls="degree" aria-selected="false">Attained Degrees</a>
-            			</div>
-            		</nav>
-	    		<div className="tab-content" id="nav-tabContent">
-                    <div className="tab-pane fade show active" id="accomplishment-count" role="tabpanel" aria-labelledby="accomplishment-count-tab"><AccomplishmentCount role={props.data.role} queryList={props.queryList}>{props.accompList}</AccomplishmentCount></div>
-                    <div className="tab-pane fade" id="employment-status" role="tabpanel" aria-labelledby="employment-status-tab"><EmploymentStatus role={props.data.role} queryList={props.queryList}>{props.empList}</EmploymentStatus></div>
-				    <div className="tab-pane fade" id="degree" role="tabpanel" aria-labelledby="degree-tab"><DegreeCount role={props.data.role} queryList={props.queryList}>{props.educList}</DegreeCount></div>
-                </div>
-                
-			<style jsx>{`
-				a.nav-item{
-					color:#000;
-				}
-				a.nav-item:focus{
-					background-color:#78b6c2;
-				}
-				a.nav-item:hover{
-					background-color:#78b6c2;
-				}
-				a.active{
-					background-color:#78b6c2;
-				}
-				a#accomplishment-count-tab.active{
-					background-color:#78b6c2;
-				}
-				nav{
-					background-color:#aaa;
-				}
-			`}</style>
+                            <div className="nav nav-tabs nav-fill nav-justified" id="nav-tab" role="tablist">
+                                <a className="nav-item nav-link nav-top active" id="accomplishment-count-tab" data-bs-toggle="tab" href="#accomplishment-count" role="tab" aria-controls="accomplishment-count" aria-selected="true">
+                                    <span className="material-icons-sharp">military_tech</span>
+                                    <h3>Accomplishment Count</h3>
+                                </a>
+                                <a className="nav-item nav-link nav-top" id="employment-status-tab" data-bs-toggle="tab" href="#employment-status" role="tab" aria-controls="employment-status" aria-selected="false">
+                                    <span className="material-icons-sharp">badge</span>
+                                    <h3>Employment Status</h3>
+                                </a>
+                                <a className="nav-item nav-link nav-top" id="degree-tab" data-bs-toggle="tab" href="#degree" role="tab" aria-controls="degree" aria-selected="false">
+                                    <span className="material-icons-sharp">history_edu</span>
+                                    <h3>Attained Degrees</h3>
+                                </a>
+                            </div>
+            		    </nav>
+                        <div className="tab-content" id="nav-tabContent">
+                            <div className="tab-pane fade show active" id="accomplishment-count" role="tabpanel" aria-labelledby="accomplishment-count-tab"><AccomplishmentCount role={props.data.role} queryList={props.queryList}>{props.accompList}</AccomplishmentCount></div>
+                            <div className="tab-pane fade" id="employment-status" role="tabpanel" aria-labelledby="employment-status-tab"><EmploymentStatus role={props.data.role} queryList={props.queryList}>{props.empList}</EmploymentStatus></div>
+                            <div className="tab-pane fade" id="degree" role="tabpanel" aria-labelledby="degree-tab"><DegreeCount role={props.data.role} queryList={props.queryList}>{props.educList}</DegreeCount></div>
+                        </div>
 	                </div>
 
 	        </Layout>

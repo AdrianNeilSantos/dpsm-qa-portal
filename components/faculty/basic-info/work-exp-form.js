@@ -7,9 +7,6 @@ import addWorkExp from '../../../services/faculty/basic-info/addWorkExp'
 class WorkExpForm extends React.Component{
 	constructor(props){
 		super(props)
-		this.state = {
-			startdate: ""
-		}
 	}
 
 	render(){
@@ -45,54 +42,61 @@ class WorkExpForm extends React.Component{
 			>
 				{({ values, errors, touched, isSubmitting }) => (
 					<Form>
+						<h2 className="center">Add Work Experience Form</h2>
 						<hr />
-						<br />
 						<h6>Required</h6>
-						<div className = "form-row">
-							<div className = "form-group col-md-3">
-								<label htmlFor = "EmployerWorkExperience[]" className = "required-label"> Employer </label>
+						{/* 1st Row */}
+						<div className = "row pb-3">
+							<div className = "form-group col-md-6">
+								<label htmlFor = "EmployerWorkExperience[]" className = "required-label" style={{fontSize:"16px"}}> Employer </label>
 								<Field className = "form-control" type = "text" name = "employerName" placeholder = "Input name of employer" required />
 							</div>
-							<div className = "form-group col-md-3">
-								<label htmlFor = "PositionWorkExperience[]" className = "required-label"> Title/Position </label>
+							<div className = "form-group col-md-6">
+								<label htmlFor = "PositionWorkExperience[]" className = "required-label" style={{fontSize:"16px"}}> Title/Position </label>
 								<Field className = "form-control" type = "text" name = "position" placeholder = "Input position" required />
 							</div>
-							<div className = "form-group col-md-6">
-								<label htmlFor = "DescriptionWorkExperience[]"> Description </label>
+						</div>
+
+						{/* 2nd Row */}
+						<div className="row pb-3">
+							<div className = "form-group col-md-12">
+								<label htmlFor = "DescriptionWorkExperience[]" style={{fontSize:"16px"}}> Description </label>
 								<Field className = "form-control" type = "text" name = "description" placeholder = "Add Description" />
 							</div>
 						</div>
-						<div className = "form-row">
-							<div className = "form-group col-md-3">
-								<label htmlFor = "StartDateWorkExperience[]" className = "required-label"> Start Date </label>
-								<Field type = "date" className = "form-control" onChange={e => this.setState({ startdate: e.target.value })} name = "startDate" required />
+
+						{/* 3rd Row */}
+						<div className = "row pb-3">
+							<div className = "form-group col-md-6">
+								<label htmlFor = "StartDateWorkExperience[]" className = "required-label" style={{fontSize:"16px"}}> Start Date </label>
+								<Field type = "date" className = "form-control" name = "startDate" required />
 							</div>
-							<div className = "form-group col-md-3">
-								<label htmlFor = "EndDateWorkExperience[]"> End Date </label>
-								<Field type = "date" className = "form-control" min={this.state.startdate} name = "endDate" />
+							<div className = "form-group col-md-6">
+								<label htmlFor = "EndDateWorkExperience[]" style={{fontSize:"16px"}}> End Date </label>
+								<Field type = "date" className = "form-control" name = "endDate" />
 							</div>
 						</div>
 						<br />
-						<button
-							type = "submit"
-							className = "btn btn-primary col-md-12"
-							disabled = {isSubmitting}
-						>
-							Submit
-						</button>
+
+						<div className="center">
+							<button type = "submit" className = "btn customButton maroon" disabled = {isSubmitting}>
+								<span className="material-icons-sharp">add</span>
+								Submit
+							</button>
+						</div>
+
 						<style jsx>{`
-		label.required-label:after{
-			content: "*";
-			color: #f00;
-		}
-		h6:before{
-			content: "* ";
-			color: #f00;
-		}
-	`}</style>
+							label.required-label:after{
+								content: "*";
+								color: #f00;
+							}
+							h6:before{
+								content: "* ";
+								color: #f00;
+							}
+						`}</style>
 					</Form>
 				)}
-				
 			</Formik>
 		)
 	}

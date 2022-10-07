@@ -84,16 +84,16 @@ function Table ({columns, data}){
    } = useTable({ columns, data, defaultColumn, initialState: { pageIndex: 0 } }, useFilters, useGroupBy, useSortBy, useExpanded, usePagination)
 
  return(
-<div>
+<div className="table-container">
     <br />
     <ReactHTMLTableToExcel
 				id="test-table-xls-button"
-				className="btn btn-primary mb-2"
+				className="btn customButton maroon"
 				table="degreeTable"
 				filename="degree"
 				buttonText="Download as XLS"/>
-    <br />
-   <table className = "table table-striped" {...getTableProps()} id="degreeTable">
+    <br/><br/>
+   <table className = "table table-hover" {...getTableProps()} id="degreeTable">
        <thead>
          {headerGroups.map(headerGroup => (
            <tr {...headerGroup.getHeaderGroupProps()}>
@@ -135,7 +135,7 @@ function Table ({columns, data}){
                           ? '#ffa50078'
                           : cell.isPlaceholder
                           ? '#ff000042'
-                          : 'white',
+                          : 'var(--color-background)',
                       }}
                     >
                       {cell.isGrouped ? (
@@ -227,13 +227,7 @@ function Table ({columns, data}){
           ))}
         </select>
       </div>
-      <style jsx>{`
-		table{
-			display: block;
-			overflow: x;
-			white-space: nowrap;
-		}
-	`}</style>
+
 </div>
  )
   
@@ -274,7 +268,7 @@ function Table ({columns, data}){
 	 disableSortBy: true
        },
        {
-         Header: 'Date Earned (click to sort)',
+         Header: 'Date Earned',
 	 Footer: '',
          accessor: 'col4',
 	 sortBy: 'datetime',

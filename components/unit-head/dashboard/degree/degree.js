@@ -121,13 +121,13 @@ function DegreeCount(props) {
 	}
 	return(
 		<div>
-			<br />
-			<h3 align = "center">Attained Degrees</h3>
+			<br /><br/>
+			<h3 className="table-container-text" align = "center">Attained Degrees</h3>
 
-			<div className = "form-row">
+			<div className = "dashboard-form-row">
 				{
 					props.role == 3 && 
-					<div className = "form-group col-md-3">
+					<div className = "dashboard-form-group col-md-3">
 						<label className = "control-label" htmlFor ="DegreeDeptUnit"> Department Unit </label>
 						<select className = "form-control" name = "DegreeDeptUnit" id="DegreeDeptUnit" defaultValue={unitId}>
 							<option value="0">All</option>
@@ -138,19 +138,19 @@ function DegreeCount(props) {
 					</div>
 				}
 
-				<div className = "form-group col-md-3">
+				<div className = "dashboard-form-group col-md-3">
 					<label className = "control-label" htmlFor ="DegreeStartTimePeriod"> From  </label>
 					<input className = "form-control" type = "date" name = "DegreeStartTimePeriod" id="DegreeStartTimePeriod" defaultValue={startDate} />
 				</div>
 
-				<div className = "form-group col-md-3">
+				<div className = "dashboard-form-group col-md-3">
 					<label className = "control-label" htmlFor ="DegreeEndTimePeriod"> To </label>
 					<input className = "form-control" type = "date" name = "DegreeEndTimePeriod" id="DegreeEndTimePeriod" defaultValue={endDate}/>
 				</div>
 				
-				<div className = "form-group col-md-3">
+				<div className = "dashboard-form-group col-md-3">
 					<br/>
-					<button className = "btn btn-info" onClick={() => {
+					<button className = "btn customButton-icon-only yellow" onClick={() => {
 						let unitId 
 						if(props.role == 3) unitId = document.getElementById('DegreeDeptUnit').value
 						let startDate = document.getElementById('DegreeStartTimePeriod').value
@@ -168,32 +168,31 @@ function DegreeCount(props) {
 							pathname: url,
 							query
 						})
-					}}> Filter</button>
+					}}> 
+						<span className="material-icons-sharp">filter_alt</span>
+					</button>
 				</div>
 			</div>
 
+			<br/><br/>
 			<nav>
-            			<div className="nav nav-tabs nav-fill nav-justified" id="nav-tab" role="tablist">
-					<a className="nav-item nav-link" id="degree-graph-tab" data-toggle="tab" href="#degree-graph" role="tab" aria-controls="degree-graph" aria-selected="false">Overview</a>
-					<a className="nav-item nav-link" id="table-tab" data-toggle="tab" href="#degree-table" role="tab" aria-controls="degree-table" aria-selected="false">Full List</a>
-            			</div>
-            		</nav>
+				<div className="nav nav-tabs nav-fill nav-justified" id="nav-tab" role="tablist">
+					<a className="nav-item nav-link nav-top active" id="degree-graph-tab" data-bs-toggle="tab" href="#degree-graph" role="tab" aria-controls="degree-graph" aria-selected="false">
+						<span className="material-icons-sharp">equalizer</span>
+                        <h3>Overview</h3>
+					</a>
+					<a className="nav-item nav-link nav-top" id="table-tab" data-bs-toggle="tab" href="#degree-table" role="tab" aria-controls="degree-table" aria-selected="false">
+						<span className="material-icons-sharp">view_list</span>
+                        <h3>Full List</h3>
+					</a>
+				</div>
+            </nav>
+
 	    		<div className="tab-content" id="nav-tabContent">
 	    			<div className="tab-pane fade show active" id="degree-graph" role="tabpanel" aria-labelledby="degree-graph-tab"><DegreeDashboardGraph data={graphData} /></div>
 	    			<div className="tab-pane fade" id="degree-table" role="tabpanel" aria-labelledby="degree-table-tab"><DegreeAnalyticsTable data={tableData} /></div>
-            		</div>
-                
-		<style jsx>{`
-			a.nav-item:focus{
-				background-color:#78b6c2;
-			}
-			a.nav-item:hover{
-				background-color:#78b6c2;
-			}
-			a.active{
-				background-color:#78b6c2;
-			}
-		`}</style>
+            	</div>
+				<br/><br/>
 		</div>
 	)
 }

@@ -40,50 +40,70 @@ function FacultyLoadTable(props) {
                 return (
                     <tr key = {props.children[key].recordId}>
                     <td>{props.children[key].subject}</td>
-                    <td>{props.children[key].section}</td>
-                    <td>{props.children[key].semester}</td>
-                    <td>{props.children[key].academicYear - 1 + ' - ' + props.children[key].academicYear}</td>
+                    <td className="less-important-mobile">{props.children[key].section}</td>
+                    <td className="less-important-mobile">{props.children[key].semester}</td>
+                    <td className="less-important-mobile">{props.children[key].academicYear - 1 + ' - ' + props.children[key].academicYear}</td>
                     <td>
-                        {
-                            props.children[key].syllabus &&
-                            <div className = "btn-grp">
+                            {
+                                props.children[key].syllabus &&
+
                                 <a
-                                    className ="btn btn-info"
+                                    className ="btn customButton-icon-only blue"
                                     href={process.env.UPLOADS_URL + props.children[key].syllabus}
-                                    style = {{ color: 'white' }}
+                                    style = {{ color: 'white'}}
                                     target="_blank">
-                                    View
+                                    <span className="material-icons-sharp">visibility</span>
                                 </a>
-                                {(props.editClass) && 
-                                    <a className="btn btn-warning" data-toggle="modal" data-target="#addSyllabus" onClick={() => {
-                                        setEdit(props.children[key].recordId)
-                                        setKey(editClass)
-                                    }}>Edit</a>
-                                }
-                            </div>
-                        }
-                        {
-                            (props.editClass) && !props.children[key].syllabus &&
-                            <a className="btn btn-warning" data-toggle="modal" data-target="#addSyllabus" onClick={() => {
-                                setEdit(props.children[key].recordId)
-                                setKey(editClass)
-                            }}>Add Syllabus</a>
-                        }
-                        {
-                            !props.editClass && !props.children[key].syllabus &&
-                            <div>None</div>
-                        }
+                            }
+
+                            {
+                                props.children[key].syllabus && (props.editClass) &&
+                                <a className="btn customButton-icon-only yellow"
+                                style = {{ color: 'white'}}
+                                 data-bs-toggle="modal" data-bs-target="#addSyllabus" onClick={() => {
+                                    setEdit(props.children[key].recordId)
+                                    setKey(editClass)
+                                    
+                                }}>
+                                    <span className="material-icons-sharp">edit</span>
+                                </a>
+                            }
+
+                            {
+                                (props.editClass) && !props.children[key].syllabus &&
+                                <button className="btn customButton-icon-only yellow" data-bs-toggle="modal" data-bs-target="#addSyllabus" onClick={() => {
+                                    setEdit(props.children[key].recordId)
+                                    setKey(editClass)
+                                }}>
+                                    <span className="material-icons-sharp">edit</span>
+                                </button>
+                            }
+                            {
+                                !props.editClass && !props.children[key].syllabus &&
+                                <div>None</div>
+                            }
                     </td>
+
                     {props.role==5 && <td>
-                        <div className = "btn-group">
-                            <a className="btn btn-info" data-toggle="modal" data-target="#editClass" onClick={() => {
+                            <button type="submit" className="btn customButton-icon-only blue" data-bs-toggle="modal" data-bs-target="#seeDetailsFacultyLoad" onClick={() => {
                                 setEdit(props.children[key].recordId)
                                 setKey(editClass)
-                            }}>Edit</a>
-                            <a className="btn btn-danger" data-toggle="modal" data-target="#deleteClass" onClick={() => {
+                            }}>
+                                <span className="material-icons-sharp">visibility</span>
+                            </button>
+                            <button className="btn customButton-icon-only yellow" data-bs-toggle="modal" data-bs-target="#editClass" onClick={() => {
+                                setEdit(props.children[key].recordId)
+                                setKey(editClass)
+                            }}>
+                                <span className="material-icons-sharp">edit</span>
+                            </button>
+
+                            <button className="btn customButton-icon-only delete" data-bs-toggle="modal" data-bs-target="#deleteClass" onClick={() => {
                                 setDelete(props.children[key].recordId)
-                            }}>Delete</a>
-                        </div>
+                            }}>
+                                <span className="material-icons-sharp">delete</span>
+                            </button>
+
                     </td>}
                 </tr>
                 );
@@ -91,7 +111,7 @@ function FacultyLoadTable(props) {
         })
     }
     else{
-        content = <td colSpan = "7"><p align = "center">No data available!</p></td>
+        content =<td colSpan = "6"> <br/><p align = "center">No data available.</p></td>
     }
 
     function setEdit(id) {
@@ -117,20 +137,36 @@ function FacultyLoadTable(props) {
 
     return (
         <div>
-            <h2 align = "center"> Faculty Load </h2>
+            <div className="center">
+            <h2 align = "center" style={{display: "inline-block"}}> Faculty Load </h2>
+				{ props.role == 5 &&
+					<button type="button" className="btn customButton-icon-only maroon" data-bs-toggle="collapse" data-bs-target="#addFacultyLoad" aria-expanded="false" aria-controls="addFacultyLoad" style={{left: "1rem", position: "relative"}}>
+						<span className="material-icons-sharp">add</span>
+					</button>
+                }
+            </div>
+
+            <br></br>
             <NameDisplay unit = {props.unit} position={props.position}>{props.name}</NameDisplay>
-            <div role="alert" id="loadalert" style={{visibility:"hidden"}}></div>
-            <div className = "table-responsive">
-                <table className = "table table-striped table-sm">
+            <div className="alert alert-success" role="alert" id="loadalert" style={{visibility:"hidden"}}></div>
+            
+            { props.role==5 && 
+                <div className="card collapse" id="addFacultyLoad">
+                    <FacultyLoadForm token = { props.token } facultyId = { props.facultyId } role={ props.role } />
+                </div>   
+            }
+
+            <div className = "table-container">
+                <table>
                     <thead>
-                    <tr>
-                        <th>Subject</th>
-                        <th>Section</th>
-                        <th>Semester</th>
-                        <th>Academic Year</th>
-                        <th>Syllabus</th>
-                        {props.role==5 && <th>Action</th>}
-                    </tr>
+                        <tr>
+                            <th>Subject</th>
+                            <th className="less-important-mobile">Section</th>
+                            <th className="less-important-mobile">Semester</th>
+                            <th className="less-important-mobile">Academic Year</th>
+                            <th>Syllabus</th>
+                            {props.role==5 && <th>Action</th>}
+                        </tr>
                     </thead>
                     <tbody>
                         {content}
@@ -138,18 +174,14 @@ function FacultyLoadTable(props) {
                 </table>
             </div>
 
-            { props.role==5 && 
-                <div>
-                    <FacultyLoadForm token = { props.token } facultyId = { props.facultyId } role={ props.role } />
-                </div>   
-            }
+
 	
             <div className="modal fade" id="editClass" tabIndex="-1" role="dialog" aria-labelledby="editClassLabel" aria-hidden="true">
                 <div className="modal-dialog" role="document">
                     <div className="modal-content">
                     <div className="modal-header">
                         <h5 className="modal-title" id="editClassLabel">Update Class Record</h5>
-                        <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" className="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
@@ -183,20 +215,19 @@ function FacultyLoadTable(props) {
                     {({ values, errors, touched, isSubmitting }) => (
                         <Form id = "editClassForm">
                             <div className="modal-body">
-                                <hr />
-                                <div className = "form-row">
+                                <div className = "row pb-3">
                                     <div className = "form-group">
                                         <label htmlFor = "subject"> Subject </label>
                                         <Field className = "form-control" type = "text" name = "subject" id = "subject" placeholder = "Input subject" />
                                     </div>
                                 </div>
-                                <div className = "form-row">
+                                <div className = "row pb-3">
                                     <div className = "form-group">
                                         <label htmlFor = "section"> Section </label>
                                         <Field className = "form-control" type = "text" name = "section" id= "section" placeholder = "Input section" />
                                     </div>
                                 </div>
-                                <div className = "form-row">
+                                <div className = "row pb-3">
                                     <div className = "form-group">
                                         <label htmlFor = "semester"> Semester </label>
                                         <Field as = "select" className = "form-control" name = "semester" id = "semester" required>
@@ -206,7 +237,7 @@ function FacultyLoadTable(props) {
                                         </Field>
                                     </div>
                                 </div>
-                                <div className = "form-row">
+                                <div className = "row pb-3">
                                     <div className = "form-group">
                                         <label htmlFor = "Year"> Academic Year </label>
                                         <Field as = "select" className = "form-control" name = "academicYear" id = "academicYear" required>
@@ -216,7 +247,7 @@ function FacultyLoadTable(props) {
                                 </div>
                             </div>
                             <div className="modal-footer">
-                                <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                 <button type="submit" className="btn btn-primary" disabled = {isSubmitting} onClick = {() => {
                                     $('#editClass').modal('toggle');
                                 }}>Save changes</button>
@@ -233,17 +264,17 @@ function FacultyLoadTable(props) {
                     <div className="modal-content">
                         <div className="modal-header">
                             <h5 className="modal-title" id="deleteClassLabel">Delete Class Record</h5>
-                            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                            <button type="button" className="close" data-bs-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div className="modal-body">
-                            <hr />
                             <p> Are you sure you want to delete this faculty load information? </p>
                         </div>
                         <div className="modal-footer">
-                        <button type="button" className="btn btn-secondary" data-dismiss="modal">No, don't delete</button>
+                        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">No, don't delete</button>
                         <button type="button" className="btn btn-danger" onClick = {async () => {
+                            $('#deleteClass').modal('toggle');
                             let alert = document.getElementById("loadalert")
                             let res = await deleteFacultyLoad(deleteClass, props.token, props.facultyId)
                             if(res.success == true) { 
@@ -271,7 +302,7 @@ function FacultyLoadTable(props) {
                     <div className="modal-content">
                     <div className="modal-header">
                         <h5 className="modal-title" id="addSyllabusLabel">Update Class Records</h5>
-                        <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" className="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
@@ -306,7 +337,7 @@ function FacultyLoadTable(props) {
                     {({ values, errors, touched, isSubmitting }) => (
                         <Form id = "addSyllForm">
                             <div className="modal-body">
-                                <div className = "form-row">
+                                <div className = "row pb-3">
                                     <div className = "form-group">
                                         <label htmlFor = "syllabus"> Add/Edit Syllabus [Uploaded: {currData.syllabus}] </label>
                                         <Field type = "file" className = "form-control-file" name = "syllabus" id = "syllabus" value={undefined} />
@@ -317,7 +348,7 @@ function FacultyLoadTable(props) {
                                 </div>
                             </div>
                             <div className="modal-footer">
-                                <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                 <button type="submit" className="btn btn-primary" disabled = {isSubmitting} onClick = {() => {
                                     $('#addSyllabus').modal('toggle');
                                 }}>Save changes</button>
@@ -328,6 +359,42 @@ function FacultyLoadTable(props) {
                     </div>
                 </div>
             </div>
+
+                    {/* <!-- See More Modal--> */}
+        <div className="modal fade" id="seeDetailsFacultyLoad" tabIndex="-1" role="dialog" aria-hidden="true">
+            <div className="modal-dialog" role="document">
+                <div className="modal-content">
+                <div className="modal-header">
+                    <h5 className="modal-title">View Faculty Load Information</h5>
+                    <button type="button" className="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-details">
+                        <h3>Subject: </h3>
+                        <h4>{currData.subject}</h4>
+                        <br></br>
+                        <h3>Section: </h3>
+                        <h4>{currData.section}</h4>
+                        <br></br>
+                        <h3>Semester: </h3>
+                        <h4>{currData.semester}</h4>
+                        <br></br>
+                        <h3>Academic Year: </h3>
+                        <h4>{currData.academicYear}</h4>
+                        <br></br>
+                        <h3>Syllabus: </h3>
+                        <h4>{currData.syllabus}</h4>
+                        <br></br>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+                </div>
+            </div>
+        </div>
 
         </div>
 
